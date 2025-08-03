@@ -17,9 +17,9 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
-	Translations({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
+	Translations({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
 		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
-		  $meta = TranslationMetadata(
+		  $meta = meta ?? TranslationMetadata(
 		    locale: AppLocale.en,
 		    overrides: overrides ?? {},
 		    cardinalResolver: cardinalResolver,
@@ -35,6 +35,8 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	dynamic operator[](String key) => $meta.getTranslation(key);
 
 	late final Translations _root = this; // ignore: unused_field
+
+	Translations $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => Translations(meta: meta ?? this.$meta);
 
 	// Translations
 	late final TranslationsEmailVerificationLinkSentEn emailVerificationLinkSent = TranslationsEmailVerificationLinkSentEn._(_root);
@@ -76,6 +78,8 @@ class TranslationsHomeEn {
 
 	// Translations
 	String get title => 'Home';
+	late final TranslationsHomeNavigationEn navigation = TranslationsHomeNavigationEn._(_root);
+	late final TranslationsHomeFeedEn feed = TranslationsHomeFeedEn._(_root);
 }
 
 // Path: resetPasswordLinkSent
@@ -135,6 +139,31 @@ class TranslationsForgotPasswordFormEn {
 	// Translations
 	late final TranslationsForgotPasswordFormEmailEn email = TranslationsForgotPasswordFormEmailEn._(_root);
 	late final TranslationsForgotPasswordFormSubmitEn submit = TranslationsForgotPasswordFormSubmitEn._(_root);
+}
+
+// Path: home.navigation
+class TranslationsHomeNavigationEn {
+	TranslationsHomeNavigationEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get feed => 'Feed';
+	String get appointmentCapture => 'Add Appointment';
+	String get profile => 'Profile';
+	String get settings => 'Settings';
+}
+
+// Path: home.feed
+class TranslationsHomeFeedEn {
+	TranslationsHomeFeedEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Upcoming Appointments';
+	String get empty => 'No upcoming appointments';
+	String get emptySubtitle => 'Tap the + button to create your first appointment';
 }
 
 // Path: resetPasswordLinkSent.resend
@@ -429,6 +458,13 @@ extension on Translations {
 			case 'forgotPassword.form.email.error.invalid': return 'Please enter a valid email address.';
 			case 'forgotPassword.form.submit.label': return 'Reset Password';
 			case 'home.title': return 'Home';
+			case 'home.navigation.feed': return 'Feed';
+			case 'home.navigation.appointmentCapture': return 'Add Appointment';
+			case 'home.navigation.profile': return 'Profile';
+			case 'home.navigation.settings': return 'Settings';
+			case 'home.feed.title': return 'Upcoming Appointments';
+			case 'home.feed.empty': return 'No upcoming appointments';
+			case 'home.feed.emptySubtitle': return 'Tap the + button to create your first appointment';
 			case 'resetPasswordLinkSent.title': return 'Reset Password Link';
 			case 'resetPasswordLinkSent.subtitle': return 'Check your email for your reset password link.';
 			case 'resetPasswordLinkSent.resend.question': return 'Didn\'t receive a link?';

@@ -1,85 +1,94 @@
 emailVerificationLinkSent:
-  title: 'Email Verification Link Sent'
-  subtitle: 'Check your email for you email verification link.'
+  title: "Email Verification Link Sent"
+  subtitle: "Check your email for you email verification link."
 
 forgotPassword:
-  title: 'Forgot Password?'
+  title: "Forgot Password?"
   form:
     email:
-      label: 'Email'
-      hint: 'john.doe@example.com'
+      label: "Email"
+      hint: "john.doe@example.com"
       error:
-        empty: 'Please enter your email address.'
-        invalid: 'Please enter a valid email address.'
+        empty: "Please enter your email address."
+        invalid: "Please enter a valid email address."
     submit:
-      label: 'Reset Password'
+      label: "Reset Password"
 
 home:
-  title: 'Home'
+  title: "Home"
+  navigation:
+    feed: "Feed"
+    appointmentCapture: "Add Appointment"
+    profile: "Profile"
+    settings: "Settings"
+  feed:
+    title: "Upcoming Appointments"
+    empty: "No upcoming appointments"
+    emptySubtitle: "Tap the + button to create your first appointment"
 
 resetPasswordLinkSent:
-  title: 'Reset Password Link'
-  subtitle: 'Check your email for your reset password link.'
+  title: "Reset Password Link"
+  subtitle: "Check your email for your reset password link."
   resend:
     question: "Didn't receive a link?"
-    action: 'Resend'
-    success: 'Your reset password link was resent.'
+    action: "Resend"
+    success: "Your reset password link was resent."
 
 resetPassword:
-  title: 'Reset Password'
+  title: "Reset Password"
   form:
     password:
-      label: 'Password'
+      label: "Password"
       error:
-        empty: 'Please enter a password.'
-        invalid: 'Minimum 8 characters, upper and lower case, with at least one special character.'
+        empty: "Please enter a password."
+        invalid: "Minimum 8 characters, upper and lower case, with at least one special character."
     submit:
-      label: 'Reset Password'
-      success: 'Your password was reset.'
+      label: "Reset Password"
+      success: "Your password was reset."
 
 signIn:
-  title: 'Sign In'
+  title: "Sign In"
   signUp:
-    question: 'Need an account?'
-    action: 'Sign Up'
+    question: "Need an account?"
+    action: "Sign Up"
   forgotPassword:
-    question: 'Forgot password?'
+    question: "Forgot password?"
   form:
     email:
-      label: 'Email'
-      hint: 'john.doe@example.com'
+      label: "Email"
+      hint: "john.doe@example.com"
       error:
-        empty: 'Please enter your email address.'
-        invalid: 'Please enter a valid email address.'
+        empty: "Please enter your email address."
+        invalid: "Please enter a valid email address."
     password:
-      label: 'Password'
+      label: "Password"
       error:
-        empty: 'Please enter a password.'
+        empty: "Please enter a password."
     submit:
-      label: 'Sign In'
+      label: "Sign In"
 
 signUp:
-  title: 'Sign Up'
+  title: "Sign Up"
   form:
     email:
-      label: 'Email'
-      hint: 'john.doe@example.com'
+      label: "Email"
+      hint: "john.doe@example.com"
       error:
-        empty: 'Please enter your email address.'
-        invalid: 'Please enter a valid email address.'
+        empty: "Please enter your email address."
+        invalid: "Please enter a valid email address."
     password:
-      label: 'Password'
+      label: "Password"
       error:
-        empty: 'Please enter a password.'
-        invalid: 'Minimum 8 characters, upper and lower case, with at least one special character.'
+        empty: "Please enter a password."
+        invalid: "Minimum 8 characters, upper and lower case, with at least one special character."
     submit:
-      label: 'Sign Up'
+      label: "Sign Up"
   resendEmailVerification:
-    question: 'Still need to verify you email?'
-    action: 'Resend'
+    question: "Still need to verify you email?"
+    action: "Resend"
     dialog:
-      title: 'Email Verification Link'
-      cancel: 'Cancel'
+      title: "Email Verification Link"
+      cancel: "Cancel"
       submit:
-        label: 'Resend'
-        success: 'Your email verification link was resent.'
+        label: "Resend"
+        success: "Your email verification link was resent."

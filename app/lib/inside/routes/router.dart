@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import '../../shared/mixins/logging.dart';
 import '../blocs/auth/bloc.dart';
 import 'authenticated/appointment_capture/page.dart';
+import 'authenticated/feed/page.dart';
 import 'authenticated/guard.dart';
 import 'authenticated/home/page.dart';
+import 'authenticated/profile/page.dart';
 import 'authenticated/reset_password/page.dart';
 import 'authenticated/router.dart';
 import 'unauthenitcated/email_verification_link_sent/page.dart';
@@ -62,16 +64,19 @@ class Routes_router extends RootStackRouter with SharedMixin_Logging {
       page: Authenticated_Routes.page,
       guards: [Authenticated_Guard(authBloc: authBloc)],
       children: [
-        AutoRoute(path: 'home', page: Home_Route.page),
         AutoRoute(
+          path: 'home',
+          page: Home_Route.page,
           initial: true,
-          page: AppointmentCapture_Route.page,
-          path: 'home/appointment-capture',
+          children: [
+            AutoRoute(path: 'feed', page: Feed_Route.page, initial: true),
+            AutoRoute(path: 'profile', page: Profile_Route.page),
+          ],
         ),
-        AutoRoute(path: 'home/reset-password', page: ResetPassword_Route.page),
+        AutoRoute(path: 'reset-password', page: ResetPassword_Route.page),
         RedirectRoute(path: '*', redirectTo: 'home'),
       ],
     ),
-    RedirectRoute(path: '*', redirectTo: '/home'),
+    RedirectRoute(path: '*', redirectTo: 'home'),
   ];
 }

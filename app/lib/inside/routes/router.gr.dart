@@ -21,7 +21,7 @@ class AppointmentCapture_Route extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AppointmentCapture_Page();
+      return WrappedRoute(child: const AppointmentCapture_Page());
     },
   );
 }
@@ -54,6 +54,22 @@ class EmailVerificationLinkSent_Route extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return WrappedRoute(child: const EmailVerificationLinkSent_Page());
+    },
+  );
+}
+
+/// generated route for
+/// [Feed_Page]
+class Feed_Route extends PageRouteInfo<void> {
+  const Feed_Route({List<PageRouteInfo>? children})
+    : super(Feed_Route.name, initialChildren: children);
+
+  static const String name = 'Feed_Route';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const Feed_Page());
     },
   );
 }
@@ -102,6 +118,22 @@ class Home_Route extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return WrappedRoute(child: const Home_Page());
+    },
+  );
+}
+
+/// generated route for
+/// [Profile_Page]
+class Profile_Route extends PageRouteInfo<void> {
+  const Profile_Route({List<PageRouteInfo>? children})
+    : super(Profile_Route.name, initialChildren: children);
+
+  static const String name = 'Profile_Route';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const Profile_Page());
     },
   );
 }
