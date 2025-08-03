@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 
 import '../../../../outside/repositories/ai/repository.dart';
 import '../../../blocs/appointment_capture/bloc.dart';
@@ -15,19 +16,9 @@ class AppointmentCapture_Page extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Registrar Cita',
-          style: Theme.of(
-            context,
-          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: SafeArea(
+    return FScaffold(
+      header: FHeader(title: const Text('Registrar Cita')),
+      child: SafeArea(
         child: BlocBuilder<AppointmentCapture_Bloc, AppointmentCapture_State>(
           builder: (context, state) {
             return AppointmentCapture_ContentWidget(state: state);

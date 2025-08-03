@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 
 import '../../../../blocs/profile/bloc.dart';
 import '../../../../blocs/profile/event.dart';
@@ -18,7 +19,7 @@ class Profile_ContentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // User Info Section
-          Card(
+          FCard(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -78,8 +79,9 @@ class Profile_ContentWidget extends StatelessWidget {
           // Sign Out Button
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton.icon(
-              onPressed:
+            child: FButton(
+              style: FButtonStyle.destructive,
+              onPress:
                   state.isLoading
                       ? null
                       : () {
@@ -87,12 +89,13 @@ class Profile_ContentWidget extends StatelessWidget {
                           const Profile_Event_SignOut(),
                         );
                       },
-              icon: const Icon(Icons.logout),
-              label: const Text('Sign Out'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.error,
-                foregroundColor: Theme.of(context).colorScheme.onError,
-                padding: const EdgeInsets.symmetric(vertical: 12),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.logout),
+                  SizedBox(width: 8),
+                  Text('Sign Out'),
+                ],
               ),
             ),
           ),

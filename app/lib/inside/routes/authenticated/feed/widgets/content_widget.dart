@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../blocs/feed/bloc.dart';
@@ -35,8 +36,8 @@ class Feed_ContentWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
+            FButton(
+              onPress: () {
                 context.read<Feed_Bloc>().add(
                   const Feed_Event_LoadAppointments(),
                 );
@@ -103,8 +104,7 @@ class _AppointmentCard extends StatelessWidget {
     final dateFormatter = DateFormat('MMM dd, yyyy');
     final dayOfWeek = DateFormat('EEEE').format(appointment.date);
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+    return FCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

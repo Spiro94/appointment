@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 
 import '../../../../blocs/appointment_capture/bloc.dart';
 import '../../../../i18n/translations.g.dart';
+import '../../../../util/breakpoints.dart';
 import '../../../router.dart';
+import '../../../widgets/scaffold.dart';
 import '../../appointment_capture/page.dart';
 
 class Home_BottomNavigation extends StatelessWidget {
@@ -12,92 +15,67 @@ class Home_BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsRouter(
-      routes: const [Feed_Route(), Profile_Route()],
-      builder: (context, child) {
-        final tabsRouter = AutoTabsRouter.of(context);
+    return SafeArea(
+      top: false,
+      child: Stack(
+        children: [
+          AutoTabsRouter(
+            routes: const [Feed_Route(), Profile_Route()],
+            builder: (context, child) {
+              final tabsRouter = AutoTabsRouter.of(context);
 
-        return Scaffold(
-          body: child,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => _showAppointmentCaptureDialog(context),
-            tooltip: context.t.home.navigation.appointmentCapture,
-            child: const Icon(Icons.add),
+              return Routes_Scaffold(
+                breakpointType: InsideUtil_BreakpointType.constrained,
+                scaffold: FScaffold(
+                  footer: FBottomNavigationBar(
+                    index:
+                        tabsRouter.activeIndex == 0
+                            ? 0
+                            : 2, // Map actual index to navigation index
+                    onChange: (index) {
+                      // Skip the middle placeholder (index 1) and map to actual routes
+                      if (index == 0) {
+                        tabsRouter.setActiveIndex(0); // Feed
+                      } else if (index == 2) {
+                        tabsRouter.setActiveIndex(1); // Profile
+                      }
+                      // Index 1 is ignored as it's the placeholder
+                    },
+                    children: [
+                      FBottomNavigationBarItem(
+                        icon: const Icon(Icons.dynamic_feed),
+                        label: Text(context.t.home.navigation.feed),
+                      ),
+                      // Invisible placeholder for the floating action button
+                      const FBottomNavigationBarItem(
+                        icon: SizedBox(
+                          width: 24,
+                          height: 24,
+                        ), // Invisible placeholder
+                        label: SizedBox.shrink(), // No label
+                      ),
+                      FBottomNavigationBarItem(
+                        icon: const Icon(Icons.person),
+                        label: Text(context.t.home.navigation.profile),
+                      ),
+                    ],
+                  ),
+                  child: child,
+                ),
+              );
+            },
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: BottomAppBar(
-            shape: const CircularNotchedRectangle(),
-            notchMargin: 6.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(
-                  context: context,
-                  icon: Icons.dynamic_feed,
-                  label: context.t.home.navigation.feed,
-                  index: 0,
-                  currentIndex: tabsRouter.activeIndex,
-                  onTap: () => tabsRouter.setActiveIndex(0),
-                ),
-                const SizedBox(width: 40), // Space for FAB
-                _buildNavItem(
-                  context: context,
-                  icon: Icons.person,
-                  label: context.t.home.navigation.profile,
-                  index: 1,
-                  currentIndex: tabsRouter.activeIndex,
-                  onTap: () => tabsRouter.setActiveIndex(1),
-                ),
-              ],
+          // Floating action button for appointment capture
+          Positioned(
+            bottom: 24,
+            right: MediaQuery.sizeOf(context).width / 2 - 28,
+            left: MediaQuery.sizeOf(context).width / 2 - 28,
+            child: FButton(
+              onPress: () => _showAppointmentCaptureDialog(context),
+              child: const Icon(Icons.add),
             ),
           ),
-        );
-      },
-    );
-  }
-
-  Widget _buildNavItem({
-    required BuildContext context,
-    required IconData icon,
-    required String label,
-    required int index,
-    required int currentIndex,
-    required VoidCallback onTap,
-  }) {
-    final isSelected = index == currentIndex;
-    return Expanded(
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                icon,
-                color:
-                    isSelected
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withOpacity(0.6),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color:
-                      isSelected
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withOpacity(0.6),
-                ),
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

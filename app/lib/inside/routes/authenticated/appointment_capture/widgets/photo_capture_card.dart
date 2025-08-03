@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -14,11 +15,9 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: InkWell(
-        onTap: () => _handlePhotoCapture(context),
-        borderRadius: BorderRadius.circular(12),
+    return FCard(
+      child: FTappable(
+        onPress: () => _handlePhotoCapture(context),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(
@@ -118,16 +117,18 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
             title: const Text('Seleccionar fuente'),
             content: const Text('¿Cómo deseas obtener la imagen?'),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+              FButton(
+                style: FButtonStyle.outline,
+                onPress: () => Navigator.of(context).pop(),
                 child: const Text('Cancelar'),
               ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(ImageSource.gallery),
+              FButton(
+                style: FButtonStyle.outline,
+                onPress: () => Navigator.of(context).pop(ImageSource.gallery),
                 child: const Text('Galería'),
               ),
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(ImageSource.camera),
+              FButton(
+                onPress: () => Navigator.of(context).pop(ImageSource.camera),
                 child: const Text('Cámara'),
               ),
             ],
@@ -146,12 +147,13 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
               'Por favor, habilítelo en la configuración de la aplicación.',
             ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+              FButton(
+                style: FButtonStyle.outline,
+                onPress: () => Navigator.of(context).pop(),
                 child: const Text('Entendido'),
               ),
-              ElevatedButton(
-                onPressed: () {
+              FButton(
+                onPress: () {
                   Navigator.of(context).pop();
                   openAppSettings();
                 },

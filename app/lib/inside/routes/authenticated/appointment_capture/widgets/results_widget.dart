@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 
 import '../../../../blocs/appointment_capture/bloc.dart';
 import '../../../../blocs/appointment_capture/events.dart';
@@ -24,8 +25,7 @@ class AppointmentCapture_ResultsWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Header
-              Card(
-                color: Theme.of(context).colorScheme.primaryContainer,
+              FCard(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -58,7 +58,7 @@ class AppointmentCapture_ResultsWidget extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Appointment details
-              Card(
+              FCard(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -172,28 +172,41 @@ class AppointmentCapture_ResultsWidget extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () {
+                    child: FButton(
+                      style: FButtonStyle.outline,
+                      onPress: () {
                         context.read<AppointmentCapture_Bloc>().add(
                           const AppointmentCapture_Event_Reset(),
                         );
                       },
-                      icon: const Icon(Icons.refresh),
-                      label: const Text('Capturar otra vez'),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.refresh),
+                          SizedBox(width: 8),
+                          Text('Capturar otra vez'),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {
+                    child: FButton(
+                      onPress: () {
                         context.read<AppointmentCapture_Bloc>().add(
                           AppointmentCapture_Event_ConfirmData(
                             appointmentData: appointmentData,
                           ),
                         );
                       },
-                      icon: const Icon(Icons.save),
-                      label: const Text('Guardar cita'),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.save),
+                          SizedBox(width: 8),
+                          Text('Guardar cita'),
+                        ],
+                      ),
                     ),
                   ),
                 ],

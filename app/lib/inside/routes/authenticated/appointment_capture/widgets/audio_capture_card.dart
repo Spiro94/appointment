@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../blocs/appointment_capture/bloc.dart';
@@ -11,11 +12,9 @@ class AppointmentCapture_AudioCaptureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: InkWell(
-        onTap: () => _handleAudioCapture(context),
-        borderRadius: BorderRadius.circular(12),
+    return FCard(
+      child: FTappable(
+        onPress: () => _handleAudioCapture(context),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(
@@ -110,12 +109,13 @@ class AppointmentCapture_AudioCaptureCard extends StatelessWidget {
               'Por favor, habilítelo en la configuración de la aplicación.',
             ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+              FButton(
+                style: FButtonStyle.outline,
+                onPress: () => Navigator.of(context).pop(),
                 child: const Text('Entendido'),
               ),
-              ElevatedButton(
-                onPressed: () {
+              FButton(
+                onPress: () {
                   Navigator.of(context).pop();
                   openAppSettings();
                 },

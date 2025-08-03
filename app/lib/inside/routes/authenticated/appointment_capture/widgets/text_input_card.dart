@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 
 import '../../../../blocs/appointment_capture/bloc.dart';
 import '../../../../blocs/appointment_capture/events.dart';
@@ -10,11 +11,9 @@ class AppointmentCapture_TextInputCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: InkWell(
-        onTap: () => _handleTextInput(context),
-        borderRadius: BorderRadius.circular(12),
+    return FCard(
+      child: FTappable(
+        onPress: () => _handleTextInput(context),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(
@@ -112,27 +111,23 @@ class _AppointmentCapture_TextInputDialogState
               ),
             ),
             const SizedBox(height: 16),
-            TextField(
+            FTextField(
               controller: _textController,
               maxLines: 6,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                hintText:
-                    'Ejemplo: Cita con el Dr. García el próximo martes 15 de marzo a las 3:00 PM en el consultorio de cardiología...',
-                border: OutlineInputBorder(),
-                alignLabelWithHint: true,
-              ),
+              hint:
+                  'Ejemplo: Cita con el Dr. García el próximo martes 15 de marzo a las 3:00 PM en el consultorio de cardiología...',
             ),
           ],
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: _isProcessing ? null : () => Navigator.of(context).pop(),
+        FButton(
+          style: FButtonStyle.outline,
+          onPress: _isProcessing ? null : () => Navigator.of(context).pop(),
           child: const Text('Cancelar'),
         ),
-        ElevatedButton(
-          onPressed: _isProcessing ? null : _handleSubmit,
+        FButton(
+          onPress: _isProcessing ? null : _handleSubmit,
           child:
               _isProcessing
                   ? const SizedBox(

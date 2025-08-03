@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 
 import '../../../../blocs/appointment_capture/bloc.dart';
 import '../../../../blocs/appointment_capture/events.dart';
@@ -69,23 +70,36 @@ class AppointmentCapture_ErrorWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
+                  FButton(
+                    onPress: () {
                       context.read<AppointmentCapture_Bloc>().add(
                         const AppointmentCapture_Event_Retry(),
                       );
                     },
-                    icon: const Icon(Icons.refresh),
-                    label: const Text('Intentar de nuevo'),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.refresh),
+                        SizedBox(width: 8),
+                        Text('Intentar de nuevo'),
+                      ],
+                    ),
                   ),
-                  TextButton.icon(
-                    onPressed: () {
+                  FButton(
+                    style: FButtonStyle.outline,
+                    onPress: () {
                       context.read<AppointmentCapture_Bloc>().add(
                         const AppointmentCapture_Event_Reset(),
                       );
                     },
-                    icon: const Icon(Icons.home),
-                    label: const Text('Volver al inicio'),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.home),
+                        SizedBox(width: 8),
+                        Text('Volver al inicio'),
+                      ],
+                    ),
                   ),
                 ],
               ),
