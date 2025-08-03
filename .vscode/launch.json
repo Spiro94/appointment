@@ -1,0 +1,64 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "development (debug)",
+      "cwd": "app",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/app/configurations/development.dart",
+      "args": [
+        "--target",
+        "lib/app/configurations/development.dart",
+      ]
+    },
+    {
+      "name": "production (debug)",
+      "cwd": "app",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/app/configurations/production.dart",
+      "args": [
+        "--target",
+        "lib/app/configurations/production.dart",
+        "--web-renderer",
+        "canvaskit",
+        "--web-port",
+        "3000",
+        "--web-hostname=${env:SITE_HOST}",
+        "--dart-define",
+        "SITE_HOST=${env:SITE_HOST}"
+      ]
+    },
+    {
+      "name": "run flow tests",
+      "request": "launch",
+      "type": "dart",
+      "program": "app/test/",
+      "args": [
+        "--update-goldens",
+        "--dart-define",
+        "createScreenshots=true"
+      ]
+    },
+    {
+      "name": "FlowTest",
+      "request": "launch",
+      "type": "dart",
+      "codeLens": {
+        "for": [
+          "run-test",
+          "run-test-file"
+        ]
+      },
+      "args": [
+        "--update-goldens",
+        "--dart-define",
+        "createScreenshots=true"
+      ],
+    }
+  ]
+}

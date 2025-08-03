@@ -1,0 +1,13 @@
+site_name: Documentation
+
+theme:
+  name: material
+  palette:
+    primary: green
+
+docs_dir: docs
+
+extra_css:
+  - docs.css
+
+use_directory_urls: false

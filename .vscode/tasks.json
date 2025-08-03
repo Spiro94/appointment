@@ -1,0 +1,499 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "redirectUrl",
+      "description": "Redirect URL:",
+      "type": "promptString"
+    },
+    {
+      "id": "migrationName",
+      "description": "Migration name:",
+      "type": "promptString"
+    },
+    {
+      "id": "migrationVersion",
+      "description": "Migration Version (e.g. 20250224210135):",
+      "type": "promptString"
+    },
+    {
+      "id": "functionName",
+      "description": "Function name:",
+      "type": "promptString"
+    },
+    {
+      "id": "diffSchemas",
+      "description": "Schemas (e.g. auth,public,storage):",
+      "type": "promptString",
+      "default": "auth,public,storage"
+    },
+  ],
+  "tasks": [
+    {
+      "label": "[App] Local Development Tasks",
+      "group": "build",
+      "dependsOn": [
+        "[App] Build Runner (Watch)",
+        "[App] Slang (Watch)",
+        "[App] Test Gallery (Serve)",
+        "[Project] Documentation (Serve)",
+        "[Supabase] Functions (Serve)",
+      ],
+    },
+    {
+      "label": "[App] Analyze (Once)",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm flutter analyze"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm flutter analyze"
+        ]
+      }
+    },
+    {
+      "label": "[App] Build Runner (Once)",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm dart run build_runner build --delete-conflicting-outputs"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm dart run build_runner build --delete-conflicting-outputs"
+        ]
+      }
+    },
+    {
+      "label": "[App] Build Runner (Watch)",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm dart run build_runner watch --delete-conflicting-outputs"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm dart run build_runner watch --delete-conflicting-outputs"
+        ]
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^\\[INFO\\]",
+          "endsPattern": "^\\[INFO\\].*Succeeded after"
+        }
+      }
+    },
+    {
+      "label": "[App] Pub Get",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm dart pub get"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm dart pub get"
+        ]
+      }
+    },
+    {
+      "label": "[App] Dart Fix (Dry Run)",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm dart fix --dry-run"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm dart fix --dry-run"
+        ]
+      }
+    },
+    {
+      "label": "[App] Dart Fix (Apply)",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm dart fix --apply"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm dart fix --apply"
+        ]
+      }
+    },
+    {
+      "label": "[App] Modify and Copy Redirect URL for Android Emulator",
+      "type": "shell",
+      "group": "build",
+      "command": "zsh",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/app/modify_and_copy_redirect_url_for_android_emulator.sh",
+        "'${input:redirectUrl}'",
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      }
+    },
+    {
+      "label": "[App] Prebuild (Once)",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm flutter clean; fvm dart pub get; fvm dart run slang; fvm dart run build_runner build --delete-conflicting-outputs"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm flutter clean; fvm dart pub get; fvm dart run slang; fvm dart run build_runner build --delete-conflicting-outputs"
+        ]
+      }
+    },
+    {
+      "label": "[App] Slang (Once)",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm dart run slang"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm dart run slang"
+        ]
+      }
+    },
+    {
+      "label": "[App] Slang (Watch)",
+      "type": "shell",
+      "group": "build",
+      "command": "powershell.exe",
+      "args": [
+        "-Command",
+        "fvm dart run slang watch"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      },
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-Command",
+          "fvm dart run slang watch"
+        ]
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^Slang.*watching",
+          "endsPattern": "^.*generated successfully"
+        }
+      }
+    },
+    {
+      "label": "[App] Test Gallery (Clean)",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/app/test_gallery_clean.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      }
+    },
+    {
+      "label": "[App] Test Gallery (Serve)",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/app/test_gallery_serve.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      }
+    },
+    {
+      "label": "[App] Test Coverage (Serve)",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/app/test_coverage_serve.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/app"
+      }
+    },
+    {
+      "label": "[Packages] Prebuild (Once)",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/packages/prebuild_once.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/packages"
+      }
+    },
+    {
+      "label": "[Project] Direnv Allow",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/project/direnv_allow.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Project] Documentation (Serve)",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/project/documentation_serve.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] Start",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/start.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": [
+        "[Project] Direnv Allow"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "[Supabase] Stop",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/stop.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] DB Reset",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/db_reset.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] DB Diff (Local)",
+      "type": "shell",
+      "group": "build",
+      "command": "zsh",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/db_diff_local.sh",
+        "'${input:diffSchemas}'",
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] DB Diff (Linked)",
+      "type": "shell",
+      "group": "build",
+      "command": "zsh",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/db_diff_linked.sh",
+        "'${input:diffSchemas}'",
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] Functions New",
+      "type": "shell",
+      "group": "build",
+      "command": "zsh",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/functions_new.sh",
+        "'${input:functionName}'",
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] Functions (Serve)",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/functions_serve.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": [
+        "[Supabase] Start"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "[Supabase] Migration List",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/migration_list.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] Migration Up",
+      "type": "shell",
+      "group": "build",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/migration_up.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] Migration New",
+      "type": "shell",
+      "group": "build",
+      "command": "zsh",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/migration_new.sh",
+        "'${input:migrationName}'",
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] Migration Repair (Applied)",
+      "type": "shell",
+      "group": "build",
+      "command": "zsh",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/migration_repair_applied.sh",
+        "'${input:migrationVersion}'",
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "[Supabase] Migration Repair (Reverted)",
+      "type": "shell",
+      "group": "build",
+      "command": "zsh",
+      "args": [
+        "${workspaceFolder}/.vscode/tasks/supabase/migration_repair_reverted.sh",
+        "'${input:migrationVersion}'",
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    }
+  ]
+}
