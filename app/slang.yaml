@@ -1,4 +1,4 @@
-base_locale: es
+base_locale: es-CO
 input_directory: lib/inside/i18n
 input_file_pattern: .i18n.yaml
 translation_class_visibility: public

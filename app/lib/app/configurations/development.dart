@@ -9,7 +9,7 @@ import 'configuration.dart';
 
 void main() {
   final configuration = AppConfiguration(
-    appLocale: AppLocale.es,
+    appLocale: AppLocale.esCo,
     logLevel: logging.Level.ALL,
     theme: OutsideThemes.lightTheme,
     deepLinkBaseUri:

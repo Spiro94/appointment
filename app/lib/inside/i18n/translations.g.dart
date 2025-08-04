@@ -6,7 +6,7 @@
 /// Locales: 1
 /// Strings: 53
 ///
-/// Built on 2025-08-04 at 15:26 UTC
+/// Built on 2025-08-04 at 15:35 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
@@ -17,16 +17,16 @@ import 'package:slang/generated.dart';
 import 'package:slang_flutter/slang_flutter.dart';
 export 'package:slang_flutter/slang_flutter.dart';
 
-part 'translations_es.g.dart';
+part 'translations_es_CO.g.dart';
 
 /// Supported locales.
 ///
 /// Usage:
-/// - LocaleSettings.setLocale(AppLocale.es) // set locale
-/// - Locale locale = AppLocale.es.flutterLocale // get flutter locale from enum
-/// - if (LocaleSettings.currentLocale == AppLocale.es) // locale check
+/// - LocaleSettings.setLocale(AppLocale.esCo) // set locale
+/// - Locale locale = AppLocale.esCo.flutterLocale // get flutter locale from enum
+/// - if (LocaleSettings.currentLocale == AppLocale.esCo) // locale check
 enum AppLocale with BaseAppLocale<AppLocale, Translations> {
-	es(languageCode: 'es');
+	esCo(languageCode: 'es', countryCode: 'CO');
 
 	const AppLocale({
 		required this.languageCode,
@@ -45,8 +45,8 @@ enum AppLocale with BaseAppLocale<AppLocale, Translations> {
 		PluralResolver? ordinalResolver,
 	}) async {
 		switch (this) {
-			case AppLocale.es:
-				return TranslationsEs(
+			case AppLocale.esCo:
+				return TranslationsEsCo(
 					overrides: overrides,
 					cardinalResolver: cardinalResolver,
 					ordinalResolver: ordinalResolver,
@@ -61,8 +61,8 @@ enum AppLocale with BaseAppLocale<AppLocale, Translations> {
 		PluralResolver? ordinalResolver,
 	}) {
 		switch (this) {
-			case AppLocale.es:
-				return TranslationsEs(
+			case AppLocale.esCo:
+				return TranslationsEsCo(
 					overrides: overrides,
 					cardinalResolver: cardinalResolver,
 					ordinalResolver: ordinalResolver,
@@ -152,7 +152,7 @@ class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, Translations> 
 /// Provides utility functions without any side effects.
 class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, Translations> {
 	AppLocaleUtils._() : super(
-		baseLocale: AppLocale.es,
+		baseLocale: AppLocale.esCo,
 		locales: AppLocale.values,
 	);
 

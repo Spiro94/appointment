@@ -19,7 +19,7 @@ FutureOr<Widget> testAppBuilder({
   return await appBuilder(
     key: key,
     deepLinkFragmentOverride: deepLinkOverride,
-    appLocale: AppLocale.es,
+    appLocale: AppLocale.esCo,
     theme: theme,
     accessToken: accessToken,
     effectProviders: mocks.effectProviders,

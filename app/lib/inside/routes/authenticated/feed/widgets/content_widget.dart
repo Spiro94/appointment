@@ -120,8 +120,9 @@ class _AppointmentCard extends StatelessWidget {
       }
     }
 
-    final dateFormatter = DateFormat('dd MMM, yyyy', 'es_CO');
-    final dayOfWeek = DateFormat('EEEE', 'es_CO');
+    final currentLocale = LocaleSettings.currentLocale.flutterLocale.toString();
+    final dateFormatter = DateFormat('dd MMM, yyyy', currentLocale);
+    final dayOfWeek = DateFormat('EEEE', currentLocale);
 
     return FCard(
       child: Padding(
