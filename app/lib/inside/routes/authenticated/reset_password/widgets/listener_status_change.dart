@@ -9,10 +9,7 @@ import '../../../../i18n/translations.g.dart';
 import '../../../router.dart';
 
 class ResetPassword_Listener_StatusChange extends StatelessWidget {
-  const ResetPassword_Listener_StatusChange({
-    required this.child,
-    super.key,
-  });
+  const ResetPassword_Listener_StatusChange({required this.child, super.key});
 
   final Widget child;
 
@@ -34,7 +31,7 @@ class ResetPassword_Listener_StatusChange extends StatelessWidget {
                     backgroundColor: scaffoldBackgroundColor,
                     content: FAlert(
                       title: Text(state.errorMessage!),
-                      style: FAlertStyle.destructive,
+                      style: FAlertStyle.destructive(),
                     ),
                   ),
                 );
@@ -42,15 +39,13 @@ class ResetPassword_Listener_StatusChange extends StatelessWidget {
             }
           case ResetPassword_Status.resetPasswordSuccess:
             {
-              context.router.navigate(
-                const Home_Route(),
-              );
+              context.router.navigate(const Home_Route());
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: scaffoldBackgroundColor,
                   content: FAlert(
                     title: Text(context.t.resetPassword.form.submit.success),
-                    style: FAlertStyle.primary,
+                    style: FAlertStyle.primary(),
                   ),
                 ),
               );

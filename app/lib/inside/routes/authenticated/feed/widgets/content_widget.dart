@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../shared/models/appointment.dart';
 import '../../../../blocs/feed/bloc.dart';
@@ -150,7 +151,7 @@ class _AppointmentCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '${appointmentDate != null ? dayOfWeek.format(appointmentDate) : ''}, ${appointmentDate != null ? dateFormatter.format(appointmentDate) : appointment.date ?? 'No date'} at ${appointment.time ?? 'No time'}',
+                        '${appointmentDate != null ? dayOfWeek.format(appointmentDate) : ''}, ${appointmentDate != null ? dateFormatter.format(appointmentDate) : appointment.date ?? 'No date'}  at ${appointment.time ?? 'No time'}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(
                             context,
@@ -169,32 +170,82 @@ class _AppointmentCard extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
-            if (appointment.location != null) ...[
+            if (appointment.location != null ||
+                appointment.address != null) ...[
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    size: 16,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurface.withOpacity(0.6),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    appointment.location!,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withOpacity(0.6),
+              GestureDetector(
+                onTap:
+                    () => _openLocationInMaps(
+                      appointment.address ?? appointment.location!,
                     ),
-                  ),
-                ],
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.location_on_outlined,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (appointment.location != null)
+                            Text(
+                              appointment.location!,
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          if (appointment.address != null &&
+                              appointment.address != appointment.location) ...[
+                            if (appointment.location != null)
+                              const SizedBox(height: 2),
+                            Text(
+                              appointment.address!,
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _openLocationInMaps(String location) async {
+    try {
+      // Create Google Maps URL with the location
+      final encodedLocation = Uri.encodeComponent(location);
+      final googleMapsUrl =
+          'https://www.google.com/maps/search/?api=1&query=$encodedLocation';
+
+      final uri = Uri.parse(googleMapsUrl);
+
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        // Fallback to opening in browser if Maps app is not available
+        await launchUrl(uri, mode: LaunchMode.inAppBrowserView);
+      }
+    } catch (e) {
+      // Handle error silently or show a snackbar if needed
+      debugPrint('Error opening location in maps: $e');
+    }
   }
 }

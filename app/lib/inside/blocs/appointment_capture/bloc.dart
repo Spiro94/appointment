@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../outside/repositories/ai/repository.dart';
+import '../../../outside/repositories/appointments/repository.dart';
 import '../../../shared/mixins/logging.dart';
 import 'events.dart';
 import 'state.dart';
@@ -11,8 +12,10 @@ import 'state.dart';
 class AppointmentCapture_Bloc
     extends Bloc<AppointmentCapture_Event, AppointmentCapture_State>
     with SharedMixin_Logging {
-  AppointmentCapture_Bloc({required this.aiRepository})
-    : super(const AppointmentCapture_State.initial()) {
+  AppointmentCapture_Bloc({
+    required this.aiRepository,
+    required this.appointmentsRepository,
+  }) : super(const AppointmentCapture_State.initial()) {
     on<AppointmentCapture_Event_CaptureFromAudio>(_onCaptureFromAudio);
     on<AppointmentCapture_Event_CaptureFromImage>(_onCaptureFromImage);
     on<AppointmentCapture_Event_CaptureFromText>(_onCaptureFromText);
@@ -23,6 +26,7 @@ class AppointmentCapture_Bloc
   }
 
   final AI_Repository aiRepository;
+  final Appointments_Repository appointmentsRepository;
 
   /// Handle audio capture and processing
   Future<void> _onCaptureFromAudio(
@@ -218,15 +222,44 @@ class AppointmentCapture_Bloc
     AppointmentCapture_Event_ConfirmData event,
     Emitter<AppointmentCapture_State> emit,
   ) async {
-    log.info('Appointment data confirmed');
+    try {
+      log.info('Appointment data confirmed, saving to database');
 
-    emit(
-      state.copyWith(
-        status: AppointmentCapture_Status.confirmed,
+      emit(
+        state.copyWith(
+          status: AppointmentCapture_Status.processing,
+          processingStep: 'Guardando cita...',
+          errorMessage: null,
+        ),
+      );
+
+      // Save appointment to database
+      await appointmentsRepository.saveAppointment(
         appointmentData: event.appointmentData,
-        errorMessage: null,
-      ),
-    );
+        captureMethod: state.captureMethod ?? 'manual',
+        rawText: state.rawText,
+      );
+
+      log.info('Appointment saved successfully');
+
+      emit(
+        state.copyWith(
+          status: AppointmentCapture_Status.saved,
+          appointmentData: event.appointmentData,
+          processingStep: null,
+          errorMessage: null,
+        ),
+      );
+    } catch (e) {
+      log.severe('Error saving appointment: $e');
+      emit(
+        state.copyWith(
+          status: AppointmentCapture_Status.error,
+          errorMessage: 'Error al guardar la cita. Intente de nuevo.',
+          processingStep: null,
+        ),
+      );
+    }
   }
 
   /// Handle reset

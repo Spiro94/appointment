@@ -53,13 +53,22 @@ serve(async (req: Request) => {
         }
 
         // Prepare vision prompt for medical appointments
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentDateISO = currentDate.toISOString().split("T")[0];
+
         const visionPrompt = prompt || `
       Analiza esta imagen que puede contener información sobre una cita médica.
       Extrae TODA la información relevante que veas:
       
+      Contexto temporal:
+      - Fecha actual: ${currentDateISO}
+      - Año actual: ${currentYear}
+      - Si no se especifica año en una fecha, asume ${currentYear}
+      
       - Nombre del doctor o especialista
       - Especialidad médica
-      - Fecha de la cita (formato DD/MM/AAAA)
+      - Fecha de la cita (formato DD/MM/AAAA, usa ${currentYear} si no hay año especificado)
       - Hora de la cita (formato 12 horas con AM/PM)
       - Lugar (clínica, hospital, consultorio)
       - Dirección completa

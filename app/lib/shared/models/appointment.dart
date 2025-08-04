@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'appointment.g.dart';
 
 /// Model for structured appointment data
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Model_Appointment extends Equatable {
   const Model_Appointment({
     this.doctorName,

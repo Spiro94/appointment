@@ -14,6 +14,7 @@ import '../outside/effect_providers/all.dart';
 import '../outside/effect_providers/auth_change/effect_provider.dart';
 import '../outside/effect_providers/mixpanel/effect_provider.dart';
 import '../outside/repositories/all.dart';
+import '../outside/repositories/appointments/repository.dart';
 import '../outside/repositories/auth/repository.dart';
 import '../outside/repositories/ai/repository.dart';
 import 'builder.dart';
@@ -72,6 +73,10 @@ Future<void> appRunner({required AppConfiguration configuration}) async {
       supabaseClient: clientProviders.supabaseClientProvider.client,
     ),
     aiRepository: AI_Repository(
+      supabaseClientProvider: clientProviders.supabaseClientProvider,
+      effectProviders: effectProviders,
+    ),
+    appointmentsRepository: Appointments_Repository(
       supabaseClientProvider: clientProviders.supabaseClientProvider,
       effectProviders: effectProviders,
     ),

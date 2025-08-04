@@ -70,6 +70,10 @@ serve(async (req: Request) => {
         }
 
         // Prepare parsing prompt
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentDateISO = currentDate.toISOString().split("T")[0];
+
         const parsingPrompt = `
       Eres un asistente especializado en extraer información de citas médicas en Colombia.
       
@@ -86,9 +90,14 @@ serve(async (req: Request) => {
                 : ""
         }
       
+      Contexto temporal:
+      - Fecha actual: ${currentDateISO}
+      - Año actual: ${currentYear}
+      - Si no se especifica año en una fecha, asume ${currentYear}
+      
       Instrucciones:
       1. Extrae y normaliza la información de la cita médica
-      2. Convierte fechas al formato ISO YYYY-MM-DD (asume año actual si no está especificado)
+      2. Convierte fechas al formato ISO YYYY-MM-DD (usa ${currentYear} si no está especificado el año)
       3. Convierte horas al formato 24 horas HH:MM
       4. Normaliza nombres de especialidades médicas
       5. Asigna un nivel de confianza del 0-100% a cada campo extraído

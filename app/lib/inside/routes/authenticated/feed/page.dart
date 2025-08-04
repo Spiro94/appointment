@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forui/forui.dart';
 
+import '../../../../outside/repositories/appointments/repository.dart';
 import '../../../blocs/feed/bloc.dart';
 import '../../../blocs/feed/state.dart';
 import 'widgets/content_widget.dart';
@@ -15,7 +16,7 @@ class Feed_Page extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return FScaffold(
-      header: const FHeader(title: Text('Feed')),
+      header: const FHeader(title: Text('Citas Médicas')),
       child: BlocBuilder<Feed_Bloc, Feed_State>(
         builder: (context, state) {
           return Feed_ContentWidget(state: state);
@@ -26,6 +27,12 @@ class Feed_Page extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(create: (context) => Feed_Bloc(), child: this);
+    return BlocProvider(
+      create:
+          (context) => Feed_Bloc(
+            appointmentsRepository: context.read<Appointments_Repository>(),
+          ),
+      child: this,
+    );
   }
 }

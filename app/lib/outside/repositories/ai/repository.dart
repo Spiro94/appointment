@@ -21,47 +21,6 @@ class AI_Repository extends Repository_Base {
     log.fine('AI Repository initialized');
   }
 
-  /// Send a chat message and get AI response
-  Future<Model_AI_ChatResponse> sendChatMessage({
-    required List<Model_ChatMessage> messages,
-    int maxTokens = 150,
-    String model = 'gpt-3.5-turbo',
-    double temperature = 0.7,
-  }) async {
-    try {
-      log.info('Sending chat message with ${messages.length} messages');
-
-      final request = Model_AI_ChatRequest(
-        messages: messages,
-        maxTokens: maxTokens,
-        model: model,
-        temperature: temperature,
-      );
-
-      final response = await supabaseClientProvider.client.functions.invoke(
-        'ai-chat',
-        body: request.toJson(),
-      );
-
-      if (response.data == null) {
-        throw Exception('No response data from ai-chat function');
-      }
-
-      // Check for error in response
-      if (response.data['error'] != null) {
-        throw Exception('AI Chat error: ${response.data['error']}');
-      }
-
-      log.fine('Received chat response successfully');
-      return Model_AI_ChatResponse.fromJson(
-        response.data as Map<String, dynamic>,
-      );
-    } catch (e) {
-      log.severe('Error in sendChatMessage: $e');
-      rethrow;
-    }
-  }
-
   /// Transcribe audio to text using Whisper
   Future<Model_AI_TranscriptionResponse> transcribeAudio({
     required Uint8List audioBytes,

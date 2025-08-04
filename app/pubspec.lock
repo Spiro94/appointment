@@ -463,18 +463,18 @@ packages:
     dependency: "direct main"
     description:
       name: forui
-      sha256: e77b5774aef52883d148dba1d7b6ce7a723c5e1901b13142aea1bb61b9e68d9e
+      sha256: "6b364e7918492caf79fadf15a46666d29d0054e9e4ba855cabb418916c282914"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.14.1"
   forui_assets:
     dependency: "direct main"
     description:
       name: forui_assets
-      sha256: "795b47478ddf7cafb72e943f97ae004a4aa01f1ae40f0b2d68768c35ee680da4"
+      sha256: "207df3d1baf3a4d5d898fbc3e0272b44758e48bfd13f3b654f24a0bfdbfa6698"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.14.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -1035,6 +1035,70 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  record:
+    dependency: "direct main"
+    description:
+      name: record
+      sha256: daeb3f9b3fea9797094433fe6e49a879d8e4ca4207740bc6dc7e4a58764f0817
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
+  record_android:
+    dependency: transitive
+    description:
+      name: record_android
+      sha256: "97d7122455f30de89a01c6c244c839085be6b12abca251fc0e78f67fed73628b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.3"
+  record_ios:
+    dependency: transitive
+    description:
+      name: record_ios
+      sha256: "73706ebbece6150654c9d6f57897cf9b622c581148304132ba85dba15df0fdfb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  record_linux:
+    dependency: transitive
+    description:
+      name: record_linux
+      sha256: "0626678a092c75ce6af1e32fe7fd1dea709b92d308bc8e3b6d6348e2430beb95"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
+  record_macos:
+    dependency: transitive
+    description:
+      name: record_macos
+      sha256: "02240833fde16c33fcf2c589f3e08d4394b704761b4a3bb609d872ff3043fbbd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  record_platform_interface:
+    dependency: transitive
+    description:
+      name: record_platform_interface
+      sha256: c1ad38f51e4af88a085b3e792a22c685cb3e7c23fc37aa7ce44c4cf18f25fe89
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
+  record_web:
+    dependency: transitive
+    description:
+      name: record_web
+      sha256: a12856d0b3dd03d336b4b10d7520a8b3e21649a06a8f95815318feaa8f07adbb
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.9"
+  record_windows:
+    dependency: transitive
+    description:
+      name: record_windows
+      sha256: "85a22fc97f6d73ecd67c8ba5f2f472b74ef1d906f795b7970f771a0914167e99"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
   retry:
     dependency: transitive
     description:
@@ -1321,7 +1385,7 @@ packages:
     source: hosted
     version: "8.0.1"
   url_launcher:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher
       sha256: "9d06212b1362abc2f0f0d78e6f09f726608c74e3b9462e8368bb03314aa8d603"

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forui/forui.dart';
 
 import '../../../../outside/repositories/ai/repository.dart';
+import '../../../../outside/repositories/appointments/repository.dart';
 import '../../../blocs/appointment_capture/bloc.dart';
 import '../../../blocs/appointment_capture/state.dart';
 import 'widgets/content_widget.dart';
@@ -18,18 +19,37 @@ class AppointmentCapture_Page extends StatelessWidget
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(16),
-        topRight: Radius.circular(16),
+        topLeft: Radius.circular(8),
+        topRight: Radius.circular(8),
       ),
       child: FScaffold(
         child: SafeArea(
-          child: BlocBuilder<AppointmentCapture_Bloc, AppointmentCapture_State>(
-            builder: (context, state) {
-              return SingleChildScrollView(
-                child: AppointmentCapture_ContentWidget(state: state),
-              );
-            },
-          ),
+          child:
+              BlocConsumer<AppointmentCapture_Bloc, AppointmentCapture_State>(
+                builder: (context, state) {
+                  return SingleChildScrollView(
+                    child: AppointmentCapture_ContentWidget(state: state),
+                  );
+                },
+                listener: (context, state) {
+                  if (state.status == AppointmentCapture_Status.saved) {
+                    final scaffoldBackgroundColor =
+                        context.theme.scaffoldStyle.backgroundColor;
+                    context.maybePop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: scaffoldBackgroundColor,
+                        content: FAlert(
+                          title: const Text(
+                            'Cita médica guardada exitosamente',
+                          ),
+                          style: FAlertStyle.primary(),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
         ),
       ),
     );
@@ -41,6 +61,7 @@ class AppointmentCapture_Page extends StatelessWidget
       create:
           (context) => AppointmentCapture_Bloc(
             aiRepository: context.read<AI_Repository>(),
+            appointmentsRepository: context.read<Appointments_Repository>(),
           ),
       child: this,
     );

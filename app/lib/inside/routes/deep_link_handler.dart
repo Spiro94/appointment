@@ -45,10 +45,7 @@ class Routes_DeepLinkHandler with SharedMixin_Logging {
           includePrefixMatches: true,
         );
       case '/deep/verify-email/':
-        return const DeepLink.path(
-          '/home/',
-          includePrefixMatches: true,
-        );
+        return const DeepLink.path('/home/', includePrefixMatches: true);
       default:
         return deepLink;
     }
@@ -190,7 +187,7 @@ class Routes_DeepLinkHandler with SharedMixin_Logging {
             backgroundColor: scaffoldBackgroundColor,
             content: FAlert(
               title: Text(errorMessage),
-              style: FAlertStyle.destructive,
+              style: FAlertStyle.destructive(),
             ),
           ),
         );

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/forui.dart';
 
 import '../../../../outside/repositories/auth/repository.dart';
 import '../../../blocs/profile/bloc.dart';
@@ -14,24 +15,19 @@ class Profile_Page extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return FScaffold(
+      header: FHeader(
         title: Text(
-          'Profile',
+          'Perfil',
           style: Theme.of(
             context,
           ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
-        centerTitle: true,
       ),
-      body: SafeArea(
-        child: BlocBuilder<Profile_Bloc, Profile_State>(
-          builder: (context, state) {
-            return Profile_ContentWidget(state: state);
-          },
-        ),
+      child: BlocBuilder<Profile_Bloc, Profile_State>(
+        builder: (context, state) {
+          return Profile_ContentWidget(state: state);
+        },
       ),
     );
   }

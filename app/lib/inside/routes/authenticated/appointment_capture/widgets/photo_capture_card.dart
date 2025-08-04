@@ -110,26 +110,26 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
   }
 
   Future<ImageSource?> _showImageSourceDialog(BuildContext context) {
-    return showDialog<ImageSource>(
+    return showFDialog<ImageSource>(
       context: context,
       builder:
-          (context) => AlertDialog(
+          (fContext, style, animation) => FDialog(
             title: const Text('Seleccionar fuente'),
-            content: const Text('¿Cómo deseas obtener la imagen?'),
+            body: const Text('¿Cómo deseas obtener la imagen?'),
             actions: [
               FButton(
-                style: FButtonStyle.outline,
-                onPress: () => Navigator.of(context).pop(),
-                child: const Text('Cancelar'),
-              ),
-              FButton(
-                style: FButtonStyle.outline,
                 onPress: () => Navigator.of(context).pop(ImageSource.gallery),
                 child: const Text('Galería'),
               ),
               FButton(
                 onPress: () => Navigator.of(context).pop(ImageSource.camera),
                 child: const Text('Cámara'),
+              ),
+              const SizedBox(height: 16),
+              FButton(
+                style: FButtonStyle.outline(),
+                onPress: () => Navigator.of(context).pop(),
+                child: const Text('Cancelar'),
               ),
             ],
           ),
@@ -148,7 +148,7 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
             ),
             actions: [
               FButton(
-                style: FButtonStyle.outline,
+                style: FButtonStyle.outline(),
                 onPress: () => Navigator.of(context).pop(),
                 child: const Text('Entendido'),
               ),

@@ -25,6 +25,9 @@ enum AppointmentCapture_Status {
   /// Successfully confirmed - ready to save
   confirmed,
 
+  /// Appointment data has been saved
+  saved,
+
   /// Error occurred during processing
   error,
 }

@@ -8,10 +8,7 @@ import '../../../../../blocs/reset_password/state.dart';
 import '../../../../router.dart';
 
 class ForgotPassword_Listener_StatusChange extends StatelessWidget {
-  const ForgotPassword_Listener_StatusChange({
-    required this.child,
-    super.key,
-  });
+  const ForgotPassword_Listener_StatusChange({required this.child, super.key});
 
   final Widget child;
 
@@ -32,7 +29,7 @@ class ForgotPassword_Listener_StatusChange extends StatelessWidget {
                     backgroundColor: scaffoldBackgroundColor,
                     content: FAlert(
                       title: Text(state.errorMessage!),
-                      style: FAlertStyle.destructive,
+                      style: FAlertStyle.destructive(),
                     ),
                   ),
                 );
@@ -41,9 +38,7 @@ class ForgotPassword_Listener_StatusChange extends StatelessWidget {
           case ResetPassword_Status.sendResetPasswordLinkSuccess:
             {
               context.router.navigate(
-                ResetPasswordLinkSent_Route(
-                  email: state.email,
-                ),
+                ResetPasswordLinkSent_Route(email: state.email),
               );
             }
           case ResetPassword_Status.sendResetPasswordLinkInProgress:

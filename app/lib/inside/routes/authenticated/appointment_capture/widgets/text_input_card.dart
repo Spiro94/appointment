@@ -67,9 +67,13 @@ class AppointmentCapture_TextInputCard extends StatelessWidget {
   }
 
   void _handleTextInput(BuildContext context) {
-    showDialog<void>(
+    showFDialog<void>(
       context: context,
-      builder: (context) => const AppointmentCapture_TextInputDialog(),
+      builder:
+          (fContext, style, animation) => BlocProvider.value(
+            value: context.read<AppointmentCapture_Bloc>(),
+            child: const AppointmentCapture_TextInputDialog(),
+          ),
     );
   }
 }
@@ -96,9 +100,9 @@ class _AppointmentCapture_TextInputDialogState
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return FDialog(
       title: const Text('Escribir detalles de la cita'),
-      content: SizedBox(
+      body: SizedBox(
         width: double.maxFinite,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -114,6 +118,7 @@ class _AppointmentCapture_TextInputDialogState
             FTextField(
               controller: _textController,
               maxLines: 6,
+              autofocus: true,
               hint:
                   'Ejemplo: Cita con el Dr. García el próximo martes 15 de marzo a las 3:00 PM en el consultorio de cardiología...',
             ),
@@ -122,7 +127,7 @@ class _AppointmentCapture_TextInputDialogState
       ),
       actions: [
         FButton(
-          style: FButtonStyle.outline,
+          style: FButtonStyle.outline(),
           onPress: _isProcessing ? null : () => Navigator.of(context).pop(),
           child: const Text('Cancelar'),
         ),

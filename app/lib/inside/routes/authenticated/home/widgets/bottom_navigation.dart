@@ -88,8 +88,10 @@ class Home_BottomNavigation extends StatelessWidget {
       builder:
           (dialogContext) => BlocProvider(
             create:
-                (context) =>
-                    AppointmentCapture_Bloc(aiRepository: context.read()),
+                (context) => AppointmentCapture_Bloc(
+                  aiRepository: context.read(),
+                  appointmentsRepository: context.read(),
+                ),
             child: const AppointmentCapture_Page(),
           ),
     );
