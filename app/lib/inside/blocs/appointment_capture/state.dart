@@ -42,7 +42,7 @@ class AppointmentCapture_State extends Equatable {
   });
 
   final AppointmentCapture_Status status;
-  final AI_AppointmentData? appointmentData;
+  final Model_AI_AppointmentData? appointmentData;
   final String? rawText; // Original transcribed/extracted text
   final String? captureMethod; // 'audio', 'image', 'text'
   final int? confidence; // Overall confidence score 0-100
@@ -62,7 +62,7 @@ class AppointmentCapture_State extends Equatable {
   /// Copy with new values
   AppointmentCapture_State copyWith({
     AppointmentCapture_Status? status,
-    AI_AppointmentData? appointmentData,
+    Model_AI_AppointmentData? appointmentData,
     String? rawText,
     String? captureMethod,
     int? confidence,

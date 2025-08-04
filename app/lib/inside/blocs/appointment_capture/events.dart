@@ -21,7 +21,7 @@ class AppointmentCapture_Event_CaptureFromAudio
 
   final List<int> audioBytes;
   final String language;
-  final AI_AppointmentData? existingData;
+  final Model_AI_AppointmentData? existingData;
 
   @override
   List<Object?> get props => [audioBytes, language, existingData];
@@ -36,7 +36,7 @@ class AppointmentCapture_Event_CaptureFromImage
   });
 
   final List<int> imageBytes;
-  final AI_AppointmentData? existingData;
+  final Model_AI_AppointmentData? existingData;
 
   @override
   List<Object?> get props => [imageBytes, existingData];
@@ -51,7 +51,7 @@ class AppointmentCapture_Event_CaptureFromText
   });
 
   final String text;
-  final AI_AppointmentData? existingData;
+  final Model_AI_AppointmentData? existingData;
 
   @override
   List<Object?> get props => [text, existingData];
@@ -65,7 +65,7 @@ class AppointmentCapture_Event_RefineData extends AppointmentCapture_Event {
   });
 
   final String rawText;
-  final AI_AppointmentData existingData;
+  final Model_AI_AppointmentData existingData;
 
   @override
   List<Object> get props => [rawText, existingData];
@@ -75,7 +75,7 @@ class AppointmentCapture_Event_RefineData extends AppointmentCapture_Event {
 class AppointmentCapture_Event_ConfirmData extends AppointmentCapture_Event {
   const AppointmentCapture_Event_ConfirmData({required this.appointmentData});
 
-  final AI_AppointmentData appointmentData;
+  final Model_AI_AppointmentData appointmentData;
 
   @override
   List<Object> get props => [appointmentData];

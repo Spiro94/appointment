@@ -21,9 +21,9 @@ class AI_Repository extends Repository_Base {
     log.fine('AI Repository initialized');
   }
 
-  /// Send a chat message to the AI assistant
-  Future<AI_ChatResponse> sendChatMessage({
-    required List<ChatMessage> messages,
+  /// Send a chat message and get AI response
+  Future<Model_AI_ChatResponse> sendChatMessage({
+    required List<Model_ChatMessage> messages,
     int maxTokens = 150,
     String model = 'gpt-3.5-turbo',
     double temperature = 0.7,
@@ -31,7 +31,7 @@ class AI_Repository extends Repository_Base {
     try {
       log.info('Sending chat message with ${messages.length} messages');
 
-      final request = AI_ChatRequest(
+      final request = Model_AI_ChatRequest(
         messages: messages,
         maxTokens: maxTokens,
         model: model,
@@ -53,7 +53,9 @@ class AI_Repository extends Repository_Base {
       }
 
       log.fine('Received chat response successfully');
-      return AI_ChatResponse.fromJson(response.data as Map<String, dynamic>);
+      return Model_AI_ChatResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       log.severe('Error in sendChatMessage: $e');
       rethrow;
@@ -61,7 +63,7 @@ class AI_Repository extends Repository_Base {
   }
 
   /// Transcribe audio to text using Whisper
-  Future<AI_TranscriptionResponse> transcribeAudio({
+  Future<Model_AI_TranscriptionResponse> transcribeAudio({
     required Uint8List audioBytes,
     String language = 'es',
     String? prompt,
@@ -70,7 +72,7 @@ class AI_Repository extends Repository_Base {
       log.info('Transcribing audio of ${audioBytes.length} bytes');
 
       final audioBase64 = base64Encode(audioBytes);
-      final request = AI_TranscriptionRequest(
+      final request = Model_AI_TranscriptionRequest(
         audioBase64: audioBase64,
         language: language,
         prompt: prompt,
@@ -91,7 +93,7 @@ class AI_Repository extends Repository_Base {
       }
 
       log.fine('Audio transcribed successfully');
-      return AI_TranscriptionResponse.fromJson(
+      return Model_AI_TranscriptionResponse.fromJson(
         response.data as Map<String, dynamic>,
       );
     } catch (e) {
@@ -101,7 +103,7 @@ class AI_Repository extends Repository_Base {
   }
 
   /// Analyze image content using GPT-4o Vision
-  Future<AI_VisionResponse> analyzeImage({
+  Future<Model_AI_VisionResponse> analyzeImage({
     required Uint8List imageBytes,
     String? prompt,
     int maxTokens = 500,
@@ -110,7 +112,7 @@ class AI_Repository extends Repository_Base {
       log.info('Analyzing image of ${imageBytes.length} bytes');
 
       final imageBase64 = base64Encode(imageBytes);
-      final request = AI_VisionRequest(
+      final request = Model_AI_VisionRequest(
         imageBase64: imageBase64,
         prompt: prompt,
         maxTokens: maxTokens,
@@ -131,7 +133,9 @@ class AI_Repository extends Repository_Base {
       }
 
       log.fine('Image analyzed successfully');
-      return AI_VisionResponse.fromJson(response.data as Map<String, dynamic>);
+      return Model_AI_VisionResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       log.severe('Error in analyzeImage: $e');
       rethrow;
@@ -139,15 +143,15 @@ class AI_Repository extends Repository_Base {
   }
 
   /// Parse raw text into structured appointment data
-  Future<AI_ParseResponse> parseAppointmentData({
+  Future<Model_AI_ParseResponse> parseAppointmentData({
     required String rawText,
     String context = 'text',
-    AI_AppointmentData? existingData,
+    Model_AI_AppointmentData? existingData,
   }) async {
     try {
       log.info('Parsing appointment data from $context input');
 
-      final request = AI_ParseRequest(
+      final request = Model_AI_ParseRequest(
         rawText: rawText,
         context: context,
         existingData: existingData,
@@ -168,7 +172,9 @@ class AI_Repository extends Repository_Base {
       }
 
       log.fine('Appointment data parsed successfully');
-      return AI_ParseResponse.fromJson(response.data as Map<String, dynamic>);
+      return Model_AI_ParseResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
     } catch (e) {
       log.severe('Error in parseAppointmentData: $e');
       rethrow;
@@ -176,10 +182,10 @@ class AI_Repository extends Repository_Base {
   }
 
   /// Complete workflow: Audio -> Transcription -> Parsing
-  Future<AI_AppointmentData> processAudioToAppointment({
+  Future<Model_AI_AppointmentData> processAudioToAppointment({
     required Uint8List audioBytes,
     String language = 'es',
-    AI_AppointmentData? existingData,
+    Model_AI_AppointmentData? existingData,
   }) async {
     try {
       log.info('Processing audio to appointment data');
@@ -207,9 +213,9 @@ class AI_Repository extends Repository_Base {
   }
 
   /// Complete workflow: Image -> Vision Analysis -> Parsing
-  Future<AI_AppointmentData> processImageToAppointment({
+  Future<Model_AI_AppointmentData> processImageToAppointment({
     required Uint8List imageBytes,
-    AI_AppointmentData? existingData,
+    Model_AI_AppointmentData? existingData,
   }) async {
     try {
       log.info('Processing image to appointment data');

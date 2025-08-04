@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/mixins/logging.dart';
+import '../../../shared/models/appointment.dart';
 import 'event.dart';
 import 'state.dart';
 
@@ -59,32 +60,38 @@ class Feed_Bloc extends Bloc<Feed_Event, Feed_State> with SharedMixin_Logging {
     }
   }
 
-  List<Appointment> _generateMockAppointments() {
+  List<Model_Appointment> _generateMockAppointments() {
     final now = DateTime.now();
     return [
-      Appointment(
-        id: '1',
-        title: 'Doctor Appointment',
-        date: now.add(const Duration(days: 1)),
-        time: '09:00 AM',
-        description: 'Annual checkup with Dr. Smith',
+      Model_Appointment(
+        doctorName: 'Dr. Smith',
+        specialty: 'General Medicine',
+        date:
+            '${now.add(const Duration(days: 1)).year}-${now.add(const Duration(days: 1)).month.toString().padLeft(2, '0')}-${now.add(const Duration(days: 1)).day.toString().padLeft(2, '0')}',
+        time: '09:00',
         location: 'Medical Center',
+        appointmentType: 'Annual checkup',
+        notes: 'Annual checkup with Dr. Smith',
       ),
-      Appointment(
-        id: '2',
-        title: 'Dentist Cleaning',
-        date: now.add(const Duration(days: 3)),
-        time: '02:30 PM',
-        description: 'Regular dental cleaning',
+      Model_Appointment(
+        doctorName: 'Dr. Johnson',
+        specialty: 'Dentistry',
+        date:
+            '${now.add(const Duration(days: 3)).year}-${now.add(const Duration(days: 3)).month.toString().padLeft(2, '0')}-${now.add(const Duration(days: 3)).day.toString().padLeft(2, '0')}',
+        time: '14:30',
         location: 'Dental Clinic',
+        appointmentType: 'Cleaning',
+        notes: 'Regular dental cleaning',
       ),
-      Appointment(
-        id: '3',
-        title: 'Hair Appointment',
-        date: now.add(const Duration(days: 7)),
-        time: '11:00 AM',
-        description: 'Hair cut and styling',
+      Model_Appointment(
+        doctorName: 'Stylist Maria',
+        specialty: 'Hair Styling',
+        date:
+            '${now.add(const Duration(days: 7)).year}-${now.add(const Duration(days: 7)).month.toString().padLeft(2, '0')}-${now.add(const Duration(days: 7)).day.toString().padLeft(2, '0')}',
+        time: '11:00',
         location: 'Beauty Salon',
+        appointmentType: 'Hair cut and styling',
+        notes: 'Hair cut and styling',
       ),
     ];
   }

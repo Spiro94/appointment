@@ -81,16 +81,16 @@ class Home_BottomNavigation extends StatelessWidget {
   }
 
   void _showAppointmentCaptureDialog(BuildContext context) {
-    showDialog<void>(
+    showFSheet<void>(
       context: context,
+      side: FLayout.btt,
+      mainAxisMaxRatio: 0.7,
       builder:
-          (dialogContext) => Dialog.fullscreen(
-            child: BlocProvider(
-              create:
-                  (context) =>
-                      AppointmentCapture_Bloc(aiRepository: context.read()),
-              child: const AppointmentCapture_Page(),
-            ),
+          (dialogContext) => BlocProvider(
+            create:
+                (context) =>
+                    AppointmentCapture_Bloc(aiRepository: context.read()),
+            child: const AppointmentCapture_Page(),
           ),
     );
   }

@@ -5,16 +5,16 @@ part 'ai_models.g.dart';
 
 /// Model for chat messages in AI conversations
 @JsonSerializable()
-class ChatMessage extends Equatable {
-  const ChatMessage({required this.role, required this.content});
+class Model_ChatMessage extends Equatable {
+  const Model_ChatMessage({required this.role, required this.content});
 
   final String role; // 'system', 'user', 'assistant'
   final String content;
 
-  factory ChatMessage.fromJson(Map<String, dynamic> json) =>
-      _$ChatMessageFromJson(json);
+  factory Model_ChatMessage.fromJson(Map<String, dynamic> json) =>
+      _$Model_ChatMessageFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ChatMessageToJson(this);
+  Map<String, dynamic> toJson() => _$Model_ChatMessageToJson(this);
 
   @override
   List<Object> get props => [role, content];
@@ -22,23 +22,23 @@ class ChatMessage extends Equatable {
 
 /// Request model for AI chat
 @JsonSerializable()
-class AI_ChatRequest extends Equatable {
-  const AI_ChatRequest({
+class Model_AI_ChatRequest extends Equatable {
+  const Model_AI_ChatRequest({
     required this.messages,
     this.maxTokens = 150,
     this.model = 'gpt-3.5-turbo',
     this.temperature = 0.7,
   });
 
-  final List<ChatMessage> messages;
+  final List<Model_ChatMessage> messages;
   final int maxTokens;
   final String model;
   final double temperature;
 
-  factory AI_ChatRequest.fromJson(Map<String, dynamic> json) =>
-      _$AI_ChatRequestFromJson(json);
+  factory Model_AI_ChatRequest.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_ChatRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_ChatRequestToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_ChatRequestToJson(this);
 
   @override
   List<Object> get props => [messages, maxTokens, model, temperature];
@@ -46,17 +46,17 @@ class AI_ChatRequest extends Equatable {
 
 /// Response model for AI chat
 @JsonSerializable()
-class AI_ChatResponse extends Equatable {
-  const AI_ChatResponse({required this.message, this.usage, this.model});
+class Model_AI_ChatResponse extends Equatable {
+  const Model_AI_ChatResponse({required this.message, this.usage, this.model});
 
   final String message;
   final Map<String, dynamic>? usage;
   final String? model;
 
-  factory AI_ChatResponse.fromJson(Map<String, dynamic> json) =>
-      _$AI_ChatResponseFromJson(json);
+  factory Model_AI_ChatResponse.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_ChatResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_ChatResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_ChatResponseToJson(this);
 
   @override
   List<Object?> get props => [message, usage, model];
@@ -64,8 +64,8 @@ class AI_ChatResponse extends Equatable {
 
 /// Request model for AI transcription
 @JsonSerializable()
-class AI_TranscriptionRequest extends Equatable {
-  const AI_TranscriptionRequest({
+class Model_AI_TranscriptionRequest extends Equatable {
+  const Model_AI_TranscriptionRequest({
     required this.audioBase64,
     this.language = 'es',
     this.prompt,
@@ -75,10 +75,10 @@ class AI_TranscriptionRequest extends Equatable {
   final String language;
   final String? prompt;
 
-  factory AI_TranscriptionRequest.fromJson(Map<String, dynamic> json) =>
-      _$AI_TranscriptionRequestFromJson(json);
+  factory Model_AI_TranscriptionRequest.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_TranscriptionRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_TranscriptionRequestToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_TranscriptionRequestToJson(this);
 
   @override
   List<Object?> get props => [audioBase64, language, prompt];
@@ -86,16 +86,16 @@ class AI_TranscriptionRequest extends Equatable {
 
 /// Response model for AI transcription
 @JsonSerializable()
-class AI_TranscriptionResponse extends Equatable {
-  const AI_TranscriptionResponse({required this.text, this.language});
+class Model_AI_TranscriptionResponse extends Equatable {
+  const Model_AI_TranscriptionResponse({required this.text, this.language});
 
   final String text;
   final String? language;
 
-  factory AI_TranscriptionResponse.fromJson(Map<String, dynamic> json) =>
-      _$AI_TranscriptionResponseFromJson(json);
+  factory Model_AI_TranscriptionResponse.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_TranscriptionResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_TranscriptionResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_TranscriptionResponseToJson(this);
 
   @override
   List<Object?> get props => [text, language];
@@ -103,8 +103,8 @@ class AI_TranscriptionResponse extends Equatable {
 
 /// Request model for AI vision analysis
 @JsonSerializable()
-class AI_VisionRequest extends Equatable {
-  const AI_VisionRequest({
+class Model_AI_VisionRequest extends Equatable {
+  const Model_AI_VisionRequest({
     required this.imageBase64,
     this.prompt,
     this.maxTokens = 500,
@@ -114,10 +114,10 @@ class AI_VisionRequest extends Equatable {
   final String? prompt;
   final int maxTokens;
 
-  factory AI_VisionRequest.fromJson(Map<String, dynamic> json) =>
-      _$AI_VisionRequestFromJson(json);
+  factory Model_AI_VisionRequest.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_VisionRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_VisionRequestToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_VisionRequestToJson(this);
 
   @override
   List<Object?> get props => [imageBase64, prompt, maxTokens];
@@ -125,17 +125,21 @@ class AI_VisionRequest extends Equatable {
 
 /// Response model for AI vision analysis
 @JsonSerializable()
-class AI_VisionResponse extends Equatable {
-  const AI_VisionResponse({required this.analysis, this.usage, this.model});
+class Model_AI_VisionResponse extends Equatable {
+  const Model_AI_VisionResponse({
+    required this.analysis,
+    this.usage,
+    this.model,
+  });
 
   final String analysis;
   final Map<String, dynamic>? usage;
   final String? model;
 
-  factory AI_VisionResponse.fromJson(Map<String, dynamic> json) =>
-      _$AI_VisionResponseFromJson(json);
+  factory Model_AI_VisionResponse.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_VisionResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_VisionResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_VisionResponseToJson(this);
 
   @override
   List<Object?> get props => [analysis, usage, model];
@@ -143,8 +147,8 @@ class AI_VisionResponse extends Equatable {
 
 /// Model for structured appointment data
 @JsonSerializable()
-class AI_AppointmentData extends Equatable {
-  const AI_AppointmentData({
+class Model_AI_AppointmentData extends Equatable {
+  const Model_AI_AppointmentData({
     this.doctorName,
     this.specialty,
     this.date,
@@ -172,10 +176,10 @@ class AI_AppointmentData extends Equatable {
   final String? notes;
   final int? confidence; // 0-100
 
-  factory AI_AppointmentData.fromJson(Map<String, dynamic> json) =>
-      _$AI_AppointmentDataFromJson(json);
+  factory Model_AI_AppointmentData.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_AppointmentDataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_AppointmentDataToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_AppointmentDataToJson(this);
 
   @override
   List<Object?> get props => [
@@ -196,8 +200,8 @@ class AI_AppointmentData extends Equatable {
 
 /// Request model for AI parsing
 @JsonSerializable()
-class AI_ParseRequest extends Equatable {
-  const AI_ParseRequest({
+class Model_AI_ParseRequest extends Equatable {
+  const Model_AI_ParseRequest({
     required this.rawText,
     this.context = 'text',
     this.existingData,
@@ -205,12 +209,12 @@ class AI_ParseRequest extends Equatable {
 
   final String rawText;
   final String context; // 'audio', 'vision', 'text'
-  final AI_AppointmentData? existingData;
+  final Model_AI_AppointmentData? existingData;
 
-  factory AI_ParseRequest.fromJson(Map<String, dynamic> json) =>
-      _$AI_ParseRequestFromJson(json);
+  factory Model_AI_ParseRequest.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_ParseRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_ParseRequestToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_ParseRequestToJson(this);
 
   @override
   List<Object?> get props => [rawText, context, existingData];
@@ -218,23 +222,23 @@ class AI_ParseRequest extends Equatable {
 
 /// Response model for AI parsing
 @JsonSerializable()
-class AI_ParseResponse extends Equatable {
-  const AI_ParseResponse({
+class Model_AI_ParseResponse extends Equatable {
+  const Model_AI_ParseResponse({
     required this.appointmentData,
     this.usage,
     this.model,
     this.context,
   });
 
-  final AI_AppointmentData appointmentData;
+  final Model_AI_AppointmentData appointmentData;
   final Map<String, dynamic>? usage;
   final String? model;
   final String? context;
 
-  factory AI_ParseResponse.fromJson(Map<String, dynamic> json) =>
-      _$AI_ParseResponseFromJson(json);
+  factory Model_AI_ParseResponse.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_ParseResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_ParseResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_ParseResponseToJson(this);
 
   @override
   List<Object?> get props => [appointmentData, usage, model, context];
@@ -242,15 +246,15 @@ class AI_ParseResponse extends Equatable {
 
 /// Generic AI error response
 @JsonSerializable()
-class AI_ErrorResponse extends Equatable {
-  const AI_ErrorResponse({required this.error});
+class Model_AI_ErrorResponse extends Equatable {
+  const Model_AI_ErrorResponse({required this.error});
 
   final String error;
 
-  factory AI_ErrorResponse.fromJson(Map<String, dynamic> json) =>
-      _$AI_ErrorResponseFromJson(json);
+  factory Model_AI_ErrorResponse.fromJson(Map<String, dynamic> json) =>
+      _$Model_AI_ErrorResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AI_ErrorResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Model_AI_ErrorResponseToJson(this);
 
   @override
   List<Object> get props => [error];

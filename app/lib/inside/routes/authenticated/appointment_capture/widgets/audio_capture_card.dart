@@ -16,7 +16,7 @@ class AppointmentCapture_AudioCaptureCard extends StatelessWidget {
       child: FTappable(
         onPress: () => _handleAudioCapture(context),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(8),
           child: Row(
             children: [
               Container(

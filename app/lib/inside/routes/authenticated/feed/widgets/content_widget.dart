@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forui/forui.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../shared/models/appointment.dart';
 import '../../../../blocs/feed/bloc.dart';
 import '../../../../blocs/feed/event.dart';
 import '../../../../blocs/feed/state.dart';
@@ -82,9 +83,10 @@ class Feed_ContentWidget extends StatelessWidget {
       onRefresh: () async {
         context.read<Feed_Bloc>().add(const Feed_Event_RefreshAppointments());
       },
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
+      child: ListView.separated(
+        padding: const EdgeInsets.symmetric(vertical: 16),
         itemCount: state.appointments.length,
+        separatorBuilder: (context, index) => const SizedBox(height: 12),
         itemBuilder: (context, index) {
           final appointment = state.appointments[index];
           return _AppointmentCard(appointment: appointment);
@@ -97,12 +99,22 @@ class Feed_ContentWidget extends StatelessWidget {
 class _AppointmentCard extends StatelessWidget {
   const _AppointmentCard({required this.appointment});
 
-  final Appointment appointment;
+  final Model_Appointment appointment;
 
   @override
   Widget build(BuildContext context) {
+    // Parse the date string to DateTime if available
+    DateTime? appointmentDate;
+    if (appointment.date != null) {
+      try {
+        appointmentDate = DateTime.parse(appointment.date!);
+      } catch (e) {
+        // Handle invalid date format
+      }
+    }
+
     final dateFormatter = DateFormat('MMM dd, yyyy');
-    final dayOfWeek = DateFormat('EEEE').format(appointment.date);
+    final dayOfWeek = DateFormat('EEEE');
 
     return FCard(
       child: Padding(
@@ -130,13 +142,15 @@ class _AppointmentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        appointment.title,
+                        appointment.doctorName ??
+                            appointment.appointmentType ??
+                            'Appointment',
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '$dayOfWeek, ${dateFormatter.format(appointment.date)} at ${appointment.time}',
+                        '${appointmentDate != null ? dayOfWeek.format(appointmentDate) : ''}, ${appointmentDate != null ? dateFormatter.format(appointmentDate) : appointment.date ?? 'No date'} at ${appointment.time ?? 'No time'}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(
                             context,
@@ -148,10 +162,10 @@ class _AppointmentCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (appointment.description != null) ...[
+            if (appointment.notes != null) ...[
               const SizedBox(height: 12),
               Text(
-                appointment.description!,
+                appointment.notes!,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],

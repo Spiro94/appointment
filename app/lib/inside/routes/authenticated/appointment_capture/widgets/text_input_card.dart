@@ -15,7 +15,7 @@ class AppointmentCapture_TextInputCard extends StatelessWidget {
       child: FTappable(
         onPress: () => _handleTextInput(context),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(8),
           child: Row(
             children: [
               Container(

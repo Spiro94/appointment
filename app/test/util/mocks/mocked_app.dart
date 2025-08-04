@@ -15,25 +15,24 @@ import 'repositories.dart';
 List<MockedApp> createdMockedApps({
   required bool hasAccessToken,
   required String? deepLinkOverride,
-}) =>
-    [
-      MockedApp(
-        key: const Key('zincLight'),
-        events: [],
-        mocks: MocksContainer(),
-        accessToken: hasAccessToken ? 'fakeAccessToken' : null,
-        deepLinkOverride: deepLinkOverride,
-        theme: OutsideThemes.lightTheme,
-      ),
-      MockedApp(
-        key: const Key('zincDark'),
-        events: [],
-        mocks: MocksContainer(),
-        accessToken: hasAccessToken ? 'fakeAccessToken' : null,
-        deepLinkOverride: deepLinkOverride,
-        theme: OutsideThemes.darkTheme,
-      ),
-    ];
+}) => [
+  MockedApp(
+    key: const Key('zincLight'),
+    events: [],
+    mocks: MocksContainer(),
+    accessToken: hasAccessToken ? 'fakeAccessToken' : null,
+    deepLinkOverride: deepLinkOverride,
+    theme: OutsideThemes.lightTheme,
+  ),
+  MockedApp(
+    key: const Key('zincDark'),
+    events: [],
+    mocks: MocksContainer(),
+    accessToken: hasAccessToken ? 'fakeAccessToken' : null,
+    deepLinkOverride: deepLinkOverride,
+    theme: OutsideThemes.darkTheme,
+  ),
+];
 
 class MockedApp extends FTMockedApp<MocksContainer> {
   MockedApp({
@@ -44,18 +43,22 @@ class MockedApp extends FTMockedApp<MocksContainer> {
     required String? deepLinkOverride,
     required OutsideTheme theme,
   }) : super(
-          appBuilder: () async => await testAppBuilder(
-            key: key,
-            mocks: mocks,
-            accessToken: accessToken,
-            deepLinkOverride: deepLinkOverride,
-            theme: theme,
-          ),
-        );
+         appBuilder:
+             () async => await testAppBuilder(
+               key: key,
+               mocks: mocks,
+               accessToken: accessToken,
+               deepLinkOverride: deepLinkOverride,
+               theme: theme,
+             ),
+       );
 }
 
 class MocksContainer {
-  final repositories = Repositories_All(authRepository: MockAuthRepository());
+  final repositories = Repositories_All(
+    authRepository: MockAuthRepository(),
+    aiRepository: MockAIRepository(),
+  );
 
   final effectProviders = EffectProviders_All(
     authChangeEffectProvider: MockAuthChangeEffectProvider(),
@@ -73,10 +76,12 @@ class MocksContainer {
   // to return our mocked effects. So be sure to mock the getEffect methos for
   // all new effect providers.
   void mockEffectProviderGetEffectMethods() {
-    when(effectProviders.authChangeEffectProvider.getEffect)
-        .thenReturn(effects.authChangeEffect);
+    when(
+      effectProviders.authChangeEffectProvider.getEffect,
+    ).thenReturn(effects.authChangeEffect);
 
-    when(effectProviders.mixpanelEffectProvider.getEffect)
-        .thenReturn(effects.mixpanelEffect);
+    when(
+      effectProviders.mixpanelEffectProvider.getEffect,
+    ).thenReturn(effects.mixpanelEffect);
   }
 }

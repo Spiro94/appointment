@@ -15,13 +15,13 @@ class AIAssistant_State extends Equatable {
   });
 
   final AIAssistant_Status status;
-  final List<ChatMessage> messages;
+  final List<Model_ChatMessage> messages;
   final String? errorMessage;
   final bool isTyping;
 
   AIAssistant_State copyWith({
     AIAssistant_Status? status,
-    List<ChatMessage>? messages,
+    List<Model_ChatMessage>? messages,
     String? errorMessage,
     bool? isTyping,
   }) {

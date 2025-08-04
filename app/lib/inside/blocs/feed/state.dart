@@ -1,23 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-// This would typically come from a shared models directory
-class Appointment {
-  const Appointment({
-    required this.id,
-    required this.title,
-    required this.date,
-    required this.time,
-    this.description,
-    this.location,
-  });
-
-  final String id;
-  final String title;
-  final DateTime date;
-  final String time;
-  final String? description;
-  final String? location;
-}
+import '../../../shared/models/appointment.dart';
 
 class Feed_State extends Equatable {
   const Feed_State({
@@ -26,12 +9,12 @@ class Feed_State extends Equatable {
     this.error,
   });
 
-  final List<Appointment> appointments;
+  final List<Model_Appointment> appointments;
   final bool isLoading;
   final String? error;
 
   Feed_State copyWith({
-    List<Appointment>? appointments,
+    List<Model_Appointment>? appointments,
     bool? isLoading,
     String? error,
   }) {

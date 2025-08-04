@@ -15,13 +15,11 @@ class Feed_Page extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return FScaffold(
-      header: FHeader(title: const Text('Feed')),
-      child: SafeArea(
-        child: BlocBuilder<Feed_Bloc, Feed_State>(
-          builder: (context, state) {
-            return Feed_ContentWidget(state: state);
-          },
-        ),
+      header: const FHeader(title: Text('Feed')),
+      child: BlocBuilder<Feed_Bloc, Feed_State>(
+        builder: (context, state) {
+          return Feed_ContentWidget(state: state);
+        },
       ),
     );
   }
