@@ -88,8 +88,8 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
         }
       }
 
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(
+      final picker = ImagePicker();
+      final image = await picker.pickImage(
         source: source,
         maxWidth: 1920,
         maxHeight: 1920,
@@ -167,8 +167,10 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
   void _showErrorSnackbar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
-        backgroundColor: Theme.of(context).colorScheme.error,
+        content: FAlert(title: Text(message), style: FAlertStyle.destructive()),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        behavior: SnackBarBehavior.floating,
       ),
     );
   }

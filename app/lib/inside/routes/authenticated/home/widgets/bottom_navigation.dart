@@ -1,82 +1,71 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forui/forui.dart';
 
 import '../../../../blocs/appointment_capture/bloc.dart';
-import '../../../../i18n/translations.g.dart';
-import '../../../../util/breakpoints.dart';
 import '../../../router.dart';
-import '../../../widgets/scaffold.dart';
 import '../../appointment_capture/page.dart';
 
-class Home_BottomNavigation extends StatelessWidget {
+class Home_BottomNavigation extends StatefulWidget {
   const Home_BottomNavigation({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Stack(
-        children: [
-          AutoTabsRouter(
-            routes: const [Feed_Route(), Profile_Route()],
-            builder: (context, child) {
-              final tabsRouter = AutoTabsRouter.of(context);
+  State<Home_BottomNavigation> createState() => _Home_BottomNavigationState();
+}
 
-              return Routes_Scaffold(
-                breakpointType: InsideUtil_BreakpointType.constrained,
-                scaffold: FScaffold(
-                  footer: FBottomNavigationBar(
-                    index:
-                        tabsRouter.activeIndex == 0
-                            ? 0
-                            : 2, // Map actual index to navigation index
-                    onChange: (index) {
-                      // Skip the middle placeholder (index 1) and map to actual routes
-                      if (index == 0) {
-                        tabsRouter.setActiveIndex(0); // Feed
-                      } else if (index == 2) {
-                        tabsRouter.setActiveIndex(1); // Profile
-                      }
-                      // Index 1 is ignored as it's the placeholder
-                    },
-                    children: [
-                      FBottomNavigationBarItem(
-                        icon: const Icon(Icons.dynamic_feed),
-                        label: Text(context.t.home.navigation.feed),
-                      ),
-                      // Invisible placeholder for the floating action button
-                      const FBottomNavigationBarItem(
-                        icon: SizedBox(
-                          width: 24,
-                          height: 24,
-                        ), // Invisible placeholder
-                        label: SizedBox.shrink(), // No label
-                      ),
-                      FBottomNavigationBarItem(
-                        icon: const Icon(Icons.person),
-                        label: Text(context.t.home.navigation.profile),
-                      ),
-                    ],
+class _Home_BottomNavigationState extends State<Home_BottomNavigation> {
+  final routes = [const Feed_Route(), const Profile_Route()];
+
+  final iconList = [FIcons.house, FIcons.user];
+  final activeIconList = [FIcons.house, FIcons.user];
+  final routeNameList = ['Inicio', 'Perfil'];
+
+  @override
+  Widget build(BuildContext context) {
+    return AutoTabsRouter(
+      routes: routes,
+      builder: (context, child) {
+        final tabsRouter = AutoTabsRouter.of(context);
+        return Scaffold(
+          body: child,
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => _showAppointmentCaptureDialog(context),
+            child: const Icon(Icons.add),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+            itemCount: routes.length,
+            leftCornerRadius: 32,
+            rightCornerRadius: 32,
+            gapLocation: GapLocation.center,
+            tabBuilder: (index, isActive) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(iconList[index], size: 24, color: Colors.black),
+                  const SizedBox(height: 4),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      routeNameList[index],
+                      maxLines: 1,
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ),
-                  child: child,
-                ),
+                ],
               );
             },
+            activeIndex: 0,
+            onTap: (index) {
+              tabsRouter.setActiveIndex(index);
+            },
           ),
-          // Floating action button for appointment capture
-          Positioned(
-            bottom: 24,
-            right: MediaQuery.sizeOf(context).width / 2 - 28,
-            left: MediaQuery.sizeOf(context).width / 2 - 28,
-            child: FButton(
-              onPress: () => _showAppointmentCaptureDialog(context),
-              child: const Icon(Icons.add),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

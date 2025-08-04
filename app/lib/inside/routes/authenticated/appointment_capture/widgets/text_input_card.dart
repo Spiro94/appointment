@@ -179,8 +179,10 @@ class _AppointmentCapture_TextInputDialogState
   void _showErrorSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
-        backgroundColor: Theme.of(context).colorScheme.error,
+        content: FAlert(title: Text(message), style: FAlertStyle.destructive()),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        behavior: SnackBarBehavior.floating,
       ),
     );
   }

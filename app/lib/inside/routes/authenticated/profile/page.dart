@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forui/forui.dart';
 
-import '../../../../outside/repositories/auth/repository.dart';
 import '../../../blocs/profile/bloc.dart';
 import '../../../blocs/profile/state.dart';
 import 'widgets/content_widget.dart';
 
 /// Page for user profile and account management
 @RoutePage()
-class Profile_Page extends StatelessWidget implements AutoRouteWrapper {
+class Profile_Page extends StatelessWidget {
   const Profile_Page({super.key});
 
   @override
@@ -29,16 +28,6 @@ class Profile_Page extends StatelessWidget implements AutoRouteWrapper {
           return Profile_ContentWidget(state: state);
         },
       ),
-    );
-  }
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create:
-          (context) =>
-              Profile_Bloc(authRepository: context.read<Auth_Repository>()),
-      child: this,
     );
   }
 }

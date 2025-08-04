@@ -21,7 +21,7 @@ class Feed_ContentWidget extends StatelessWidget {
       return const Center(child: CircularProgressIndicator.adaptive());
     }
 
-    if (state.error != null) {
+    if (state.isError && state.error != null) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +90,13 @@ class Feed_ContentWidget extends StatelessWidget {
         separatorBuilder: (context, index) => const SizedBox(height: 12),
         itemBuilder: (context, index) {
           final appointment = state.appointments[index];
-          return _AppointmentCard(appointment: appointment);
+
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: index == state.appointments.length - 1 ? 16 : 0,
+            ),
+            child: _AppointmentCard(appointment: appointment),
+          );
         },
       ),
     );
@@ -114,7 +120,7 @@ class _AppointmentCard extends StatelessWidget {
       }
     }
 
-    final dateFormatter = DateFormat('MMM dd, yyyy');
+    final dateFormatter = DateFormat('dd MMM, yyyy');
     final dayOfWeek = DateFormat('EEEE');
 
     return FCard(
@@ -124,6 +130,7 @@ class _AppointmentCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
@@ -142,20 +149,31 @@ class _AppointmentCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (appointment.specialty != null) ...[
+                        Text(
+                          appointment.specialty!,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 4),
+                      ],
+                      if (appointment.doctorName != null ||
+                          appointment.appointmentType != null) ...[
+                        Text(
+                          appointment.doctorName ??
+                              appointment.appointmentType ??
+                              'Appointment',
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 4),
+                      ],
                       Text(
-                        appointment.doctorName ??
-                            appointment.appointmentType ??
-                            'Appointment',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${appointmentDate != null ? dayOfWeek.format(appointmentDate) : ''}, ${appointmentDate != null ? dateFormatter.format(appointmentDate) : appointment.date ?? 'No date'}  at ${appointment.time ?? 'No time'}',
+                        '${appointmentDate != null ? dayOfWeek.format(appointmentDate) : ''}, ${appointmentDate != null ? dateFormatter.format(appointmentDate) : appointment.date ?? 'No date'} at ${appointment.time ?? 'No time'}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(
                             context,
-                          ).colorScheme.onSurface.withOpacity(0.7),
+                          ).colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],

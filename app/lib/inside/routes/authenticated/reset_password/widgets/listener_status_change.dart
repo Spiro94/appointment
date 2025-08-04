@@ -19,20 +19,19 @@ class ResetPassword_Listener_StatusChange extends StatelessWidget {
       child: child,
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        final scaffoldBackgroundColor =
-            context.theme.scaffoldStyle.backgroundColor;
-
         switch (state.status) {
           case ResetPassword_Status.resetPasswordError:
             {
               if (state.errorMessage != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    backgroundColor: scaffoldBackgroundColor,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
                     content: FAlert(
                       title: Text(state.errorMessage!),
                       style: FAlertStyle.destructive(),
                     ),
+                    behavior: SnackBarBehavior.floating,
                   ),
                 );
               }
@@ -42,11 +41,13 @@ class ResetPassword_Listener_StatusChange extends StatelessWidget {
               context.router.navigate(const Home_Route());
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  backgroundColor: scaffoldBackgroundColor,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
                   content: FAlert(
                     title: Text(context.t.resetPassword.form.submit.success),
                     style: FAlertStyle.primary(),
                   ),
+                  behavior: SnackBarBehavior.floating,
                 ),
               );
             }

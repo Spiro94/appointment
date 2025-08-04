@@ -69,7 +69,7 @@ class Feed_Route extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return WrappedRoute(child: const Feed_Page());
+      return const Feed_Page();
     },
   );
 }
@@ -133,7 +133,7 @@ class Profile_Route extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return WrappedRoute(child: const Profile_Page());
+      return const Profile_Page();
     },
   );
 }

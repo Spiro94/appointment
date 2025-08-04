@@ -22,7 +22,7 @@ class Feed_Bloc extends Bloc<Feed_Event, Feed_State> with SharedMixin_Logging {
     Emitter<Feed_State> emit,
   ) async {
     try {
-      emit(state.copyWith(isLoading: true, error: null));
+      emit(state.copyWith(status: Feed_Status.loading, error: null));
 
       log.info('Loading appointments from database');
       final appointments = await appointmentsRepository.getUserAppointments();
@@ -30,14 +30,17 @@ class Feed_Bloc extends Bloc<Feed_Event, Feed_State> with SharedMixin_Logging {
       emit(
         state.copyWith(
           appointments: appointments,
-          isLoading: false,
+          status: Feed_Status.success,
           error: null,
         ),
       );
     } catch (error, stackTrace) {
       log.warning('Failed to load appointments', error, stackTrace);
       emit(
-        state.copyWith(isLoading: false, error: 'Failed to load appointments'),
+        state.copyWith(
+          status: Feed_Status.error,
+          error: 'Failed to load appointments',
+        ),
       );
     }
   }
@@ -50,10 +53,21 @@ class Feed_Bloc extends Bloc<Feed_Event, Feed_State> with SharedMixin_Logging {
       log.info('Refreshing appointments from database');
       final appointments = await appointmentsRepository.getUserAppointments();
 
-      emit(state.copyWith(appointments: appointments, error: null));
+      emit(
+        state.copyWith(
+          appointments: appointments,
+          status: Feed_Status.success,
+          error: null,
+        ),
+      );
     } catch (error, stackTrace) {
       log.warning('Failed to refresh appointments', error, stackTrace);
-      emit(state.copyWith(error: 'Failed to refresh appointments'));
+      emit(
+        state.copyWith(
+          status: Feed_Status.error,
+          error: 'Failed to refresh appointments',
+        ),
+      );
     }
   }
 }
