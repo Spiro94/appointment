@@ -13,10 +13,10 @@ class AppointmentCapture_InfoRowWidget extends StatelessWidget {
   final IconData icon;
 
   const AppointmentCapture_InfoRowWidget({
-    super.key,
     required this.label,
     required this.value,
     required this.icon,
+    super.key,
   });
 
   @override

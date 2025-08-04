@@ -13,10 +13,10 @@ import '../outside/client_providers/supabase/client_provider.dart';
 import '../outside/effect_providers/all.dart';
 import '../outside/effect_providers/auth_change/effect_provider.dart';
 import '../outside/effect_providers/mixpanel/effect_provider.dart';
+import '../outside/repositories/ai/repository.dart';
 import '../outside/repositories/all.dart';
 import '../outside/repositories/appointments/repository.dart';
 import '../outside/repositories/auth/repository.dart';
-import '../outside/repositories/ai/repository.dart';
 import 'builder.dart';
 import 'configurations/configuration.dart';
 

@@ -11,7 +11,7 @@ import 'results_widget.dart';
 
 /// Content widget that shows different content based on state
 class AppointmentCapture_ContentWidget extends StatelessWidget {
-  const AppointmentCapture_ContentWidget({super.key, required this.state});
+  const AppointmentCapture_ContentWidget({required this.state, super.key});
 
   final AppointmentCapture_State state;
 

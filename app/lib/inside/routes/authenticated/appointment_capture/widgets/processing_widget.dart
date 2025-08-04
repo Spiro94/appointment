@@ -4,7 +4,7 @@ import '../../../../blocs/appointment_capture/state.dart';
 
 /// Widget shown while processing appointment capture
 class AppointmentCapture_ProcessingWidget extends StatelessWidget {
-  const AppointmentCapture_ProcessingWidget({super.key, required this.state});
+  const AppointmentCapture_ProcessingWidget({required this.state, super.key});
 
   final AppointmentCapture_State state;
 

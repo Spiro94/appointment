@@ -1,0 +1,94 @@
+emailVerificationLinkSent:
+  title: "Enlace de Verificación de Correo Enviado"
+  subtitle: "Revisa tu correo para el enlace de verificación."
+
+forgotPassword:
+  title: "¿Olvidaste tu Contraseña?"
+  form:
+    email:
+      label: "Correo Electrónico"
+      hint: "juan.perez@ejemplo.com"
+      error:
+        empty: "Por favor ingresa tu dirección de correo electrónico."
+        invalid: "Por favor ingresa una dirección de correo electrónico válida."
+    submit:
+      label: "Restablecer Contraseña"
+
+home:
+  title: "Inicio"
+  navigation:
+    feed: "Feed"
+    appointmentCapture: "Agregar Cita"
+    profile: "Perfil"
+    settings: "Configuración"
+  feed:
+    title: "Próximas Citas"
+    empty: "No tienes citas próximas"
+    emptySubtitle: "Toca el botón + para crear tu primera cita"
+
+resetPasswordLinkSent:
+  title: "Enlace de Restablecimiento de Contraseña"
+  subtitle: "Revisa tu correo para el enlace de restablecimiento de contraseña."
+  resend:
+    question: "¿No recibiste el enlace?"
+    action: "Reenviar"
+    success: "Tu enlace de restablecimiento de contraseña fue reenviado."
+
+resetPassword:
+  title: "Restablecer Contraseña"
+  form:
+    password:
+      label: "Contraseña"
+      error:
+        empty: "Por favor ingresa una contraseña."
+        invalid: "Mínimo 8 caracteres, mayúsculas y minúsculas, con al menos un carácter especial."
+    submit:
+      label: "Restablecer Contraseña"
+      success: "Tu contraseña fue restablecida."
+
+signIn:
+  title: "Iniciar Sesión"
+  signUp:
+    question: "¿Necesitas una cuenta?"
+    action: "Registrarse"
+  forgotPassword:
+    question: "¿Olvidaste tu contraseña?"
+  form:
+    email:
+      label: "Correo Electrónico"
+      hint: "juan.perez@ejemplo.com"
+      error:
+        empty: "Por favor ingresa tu dirección de correo electrónico."
+        invalid: "Por favor ingresa una dirección de correo electrónico válida."
+    password:
+      label: "Contraseña"
+      error:
+        empty: "Por favor ingresa una contraseña."
+    submit:
+      label: "Iniciar Sesión"
+
+signUp:
+  title: "Registrarse"
+  form:
+    email:
+      label: "Correo Electrónico"
+      hint: "juan.perez@ejemplo.com"
+      error:
+        empty: "Por favor ingresa tu dirección de correo electrónico."
+        invalid: "Por favor ingresa una dirección de correo electrónico válida."
+    password:
+      label: "Contraseña"
+      error:
+        empty: "Por favor ingresa una contraseña."
+        invalid: "Mínimo 8 caracteres, mayúsculas y minúsculas, con al menos un carácter especial."
+    submit:
+      label: "Registrarse"
+  resendEmailVerification:
+    question: "¿Aún necesitas verificar tu correo?"
+    action: "Reenviar"
+    dialog:
+      title: "Enlace de Verificación de Correo"
+      cancel: "Cancelar"
+      submit:
+        label: "Reenviar"
+        success: "Tu enlace de verificación de correo fue reenviado."

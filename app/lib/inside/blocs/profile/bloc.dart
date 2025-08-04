@@ -26,7 +26,7 @@ class Profile_Bloc extends Bloc<Profile_Event, Profile_State>
 
       // Get current user information
       final user = authRepository.getCurrentUser();
-      final userName = (await user)?.email ?? 'User';
+      final userName = user?.email ?? 'User';
 
       emit(state.copyWith(userName: userName, isLoading: false));
     } catch (error, stackTrace) {

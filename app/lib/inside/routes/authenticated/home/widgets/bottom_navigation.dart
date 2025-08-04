@@ -53,7 +53,7 @@ class _Home_BottomNavigationState extends State<Home_BottomNavigation> {
                     child: Text(
                       routeNameList[index],
                       maxLines: 1,
-                      style: TextStyle(fontSize: 12),
+                      style: const TextStyle(fontSize: 12),
                     ),
                   ),
                 ],

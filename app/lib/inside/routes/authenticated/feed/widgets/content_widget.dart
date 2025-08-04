@@ -120,8 +120,8 @@ class _AppointmentCard extends StatelessWidget {
       }
     }
 
-    final dateFormatter = DateFormat('dd MMM, yyyy');
-    final dayOfWeek = DateFormat('EEEE');
+    final dateFormatter = DateFormat('dd MMM, yyyy', 'es_CO');
+    final dayOfWeek = DateFormat('EEEE', 'es_CO');
 
     return FCard(
       child: Padding(
