@@ -10,7 +10,9 @@ import '../../../../blocs/appointment_edit/state.dart';
 
 /// Sheet widget for editing appointment details
 class AppointmentEdit_Sheet extends StatefulWidget {
-  const AppointmentEdit_Sheet({super.key});
+  const AppointmentEdit_Sheet({super.key, this.initialData});
+
+  final Model_Appointment? initialData;
 
   @override
   State<AppointmentEdit_Sheet> createState() => _AppointmentEdit_SheetState();
@@ -34,18 +36,37 @@ class _AppointmentEdit_SheetState extends State<AppointmentEdit_Sheet>
   @override
   void initState() {
     super.initState();
-    _doctorNameController = TextEditingController();
-    _specialtyController = TextEditingController();
-    _dateController = FDateFieldController(vsync: this);
-    _timeController = TextEditingController();
-    _locationController = TextEditingController();
-    _addressController = TextEditingController();
-    _phoneController = TextEditingController();
-    _instructionsController = TextEditingController();
-    _authorizationNumberController = TextEditingController();
-    _notesController = TextEditingController();
 
-    // Controllers are ready for manual updates on save
+    // Initialize controllers with initial data if provided
+    final initialData = widget.initialData;
+
+    _doctorNameController = TextEditingController(
+      text: initialData?.doctorName ?? '',
+    );
+    _specialtyController = TextEditingController(
+      text: initialData?.specialty ?? '',
+    );
+    _dateController = FDateFieldController(vsync: this);
+    if (initialData?.date != null) {
+      _dateController.value = initialData!.date;
+    }
+    _timeController = TextEditingController(text: initialData?.time ?? '');
+    _locationController = TextEditingController(
+      text: initialData?.location ?? '',
+    );
+    _addressController = TextEditingController(
+      text: initialData?.address ?? '',
+    );
+    _phoneController = TextEditingController(text: initialData?.phone ?? '');
+    _instructionsController = TextEditingController(
+      text: initialData?.instructions ?? '',
+    );
+    _authorizationNumberController = TextEditingController(
+      text: initialData?.authorizationNumber ?? '',
+    );
+    _notesController = TextEditingController(text: initialData?.notes ?? '');
+
+    _selectedAppointmentType = initialData?.appointmentType;
   }
 
   @override
@@ -61,20 +82,6 @@ class _AppointmentEdit_SheetState extends State<AppointmentEdit_Sheet>
     _authorizationNumberController.dispose();
     _notesController.dispose();
     super.dispose();
-  }
-
-  void _populateControllers(Model_Appointment data) {
-    _doctorNameController.text = data.doctorName ?? '';
-    _specialtyController.text = data.specialty ?? '';
-    _dateController.value = data.date;
-    _timeController.text = data.time ?? '';
-    _locationController.text = data.location ?? '';
-    _addressController.text = data.address ?? '';
-    _phoneController.text = data.phone ?? '';
-    _selectedAppointmentType = data.appointmentType;
-    _instructionsController.text = data.instructions ?? '';
-    _authorizationNumberController.text = data.authorizationNumber ?? '';
-    _notesController.text = data.notes ?? '';
   }
 
   Model_Appointment _createAppointmentData() {
@@ -143,13 +150,6 @@ class _AppointmentEdit_SheetState extends State<AppointmentEdit_Sheet>
               behavior: SnackBarBehavior.floating,
             ),
           );
-        }
-
-        // Populate controllers when editing starts
-        if (state.isEditing && state.currentData != null) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _populateControllers(state.currentData!);
-          });
         }
       },
       builder: (context, state) {

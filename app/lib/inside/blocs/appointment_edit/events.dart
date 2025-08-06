@@ -48,3 +48,8 @@ class AppointmentEdit_Event_Cancel extends AppointmentEdit_Event {
 class AppointmentEdit_Event_Reset extends AppointmentEdit_Event {
   const AppointmentEdit_Event_Reset();
 }
+
+/// User wants to delete the appointment
+class AppointmentEdit_Event_Delete extends AppointmentEdit_Event {
+  const AppointmentEdit_Event_Delete();
+}

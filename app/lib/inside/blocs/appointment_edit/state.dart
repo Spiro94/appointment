@@ -16,6 +16,12 @@ enum AppointmentEdit_Status {
   /// Changes saved successfully
   saved,
 
+  /// Currently deleting appointment
+  deleting,
+
+  /// Appointment deleted successfully
+  deleted,
+
   /// Error occurred during editing or saving
   error,
 }
@@ -41,6 +47,8 @@ class AppointmentEdit_State extends Equatable {
   bool get isEditing => status == AppointmentEdit_Status.editing;
   bool get isSaving => status == AppointmentEdit_Status.saving;
   bool get isSaved => status == AppointmentEdit_Status.saved;
+  bool get isDeleting => status == AppointmentEdit_Status.deleting;
+  bool get isDeleted => status == AppointmentEdit_Status.deleted;
   bool get hasError => status == AppointmentEdit_Status.error;
   bool get hasChanges => originalData != currentData;
 

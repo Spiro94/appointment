@@ -97,7 +97,7 @@ class Feed_ContentWidget extends StatelessWidget {
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 16),
         itemCount: state.appointments.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 12),
+        separatorBuilder: (context, index) => const SizedBox(height: 16),
         itemBuilder: (context, index) {
           final appointment = state.appointments[index];
 
@@ -143,154 +143,164 @@ class _AppointmentCard extends StatelessWidget {
     final dayOfWeek = DateFormat('EEEE', currentLocale);
 
     return FCard(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color:
-                        showPastAppointments
-                            ? context.theme.colors.muted
-                            : context.theme.colors.secondary,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    showPastAppointments ? Icons.history : Icons.calendar_today,
-                    color:
-                        showPastAppointments
-                            ? context.theme.colors.primary
-                            : context.theme.colors.foreground,
-                    size: 20,
-                  ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color:
+                      showPastAppointments
+                          ? context.theme.colors.muted
+                          : context.theme.colors.secondary,
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (appointment.specialty != null) ...[
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                appointment.specialty!,
-                                style: context.theme.typography.base.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            if (showPastAppointments) ...[
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: context.theme.colors.muted,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  'Completada',
-                                  style: context.theme.typography.sm.copyWith(
-                                    color: context.theme.colors.mutedForeground,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                      ],
-                      if (appointment.doctorName != null ||
-                          appointment.appointmentType != null) ...[
-                        Text(
-                          appointment.doctorName ??
-                              appointment.appointmentType?.name ??
-                              'Appointment',
-                          style: context.theme.typography.sm.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                      ],
-                      Text(
-                        '${appointmentDate != null ? dayOfWeek.format(appointmentDate) : ''}, ${appointmentDate != null ? dateFormatter.format(appointmentDate) : appointment.date ?? 'No date'} at ${appointment.time ?? 'No time'}',
-                        style: context.theme.typography.base.copyWith(
-                          color: context.theme.colors.mutedForeground,
-                        ),
-                      ),
-                    ],
-                  ),
+                child: Icon(
+                  showPastAppointments ? Icons.history : Icons.calendar_today,
+                  color:
+                      showPastAppointments
+                          ? context.theme.colors.primary
+                          : context.theme.colors.foreground,
+                  size: 20,
                 ),
-              ],
-            ),
-            if (appointment.notes != null) ...[
-              const SizedBox(height: 12),
-              Text(appointment.notes!, style: context.theme.typography.sm),
-            ],
-            if (appointment.location != null ||
-                appointment.address != null) ...[
-              const SizedBox(height: 8),
-              GestureDetector(
-                onTap:
-                    () => _openLocationInMaps(
-                      appointment.address ?? appointment.location!,
-                    ),
-                child: Row(
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.location_on_outlined,
-                      size: 16,
-                      color: context.theme.colors.primary,
-                    ),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    if (appointment.specialty != null) ...[
+                      Row(
                         children: [
-                          if (appointment.location != null)
-                            Text(
-                              appointment.location!,
+                          Expanded(
+                            child: Text(
+                              appointment.specialty!,
                               style: context.theme.typography.base.copyWith(
-                                color: context.theme.colors.primary,
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          if (appointment.address != null &&
-                              appointment.address != appointment.location) ...[
-                            if (appointment.location != null)
-                              const SizedBox(height: 2),
-                            Text(
-                              appointment.address!,
-                              style: context.theme.typography.base.copyWith(
-                                color: context.theme.colors.primary,
-                                decoration: TextDecoration.underline,
+                          ),
+                          if (showPastAppointments) ...[
+                            const SizedBox(width: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: context.theme.colors.muted,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                'Completada',
+                                style: context.theme.typography.sm.copyWith(
+                                  color: context.theme.colors.mutedForeground,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ],
                         ],
+                      ),
+                      const SizedBox(height: 4),
+                    ],
+                    if (appointment.doctorName != null ||
+                        appointment.appointmentType != null) ...[
+                      Text(
+                        appointment.doctorName ??
+                            appointment.appointmentType?.name ??
+                            'Appointment',
+                        style: context.theme.typography.sm.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                    ],
+                    Text(
+                      '${appointmentDate != null ? dayOfWeek.format(appointmentDate) : ''}, ${appointmentDate != null ? dateFormatter.format(appointmentDate) : appointment.date ?? 'No date'} at ${appointment.time ?? 'No time'}',
+                      style: context.theme.typography.base.copyWith(
+                        color: context.theme.colors.mutedForeground,
                       ),
                     ),
                   ],
                 ),
               ),
             ],
-            // Add edit button for upcoming appointments only
-            if (!showPastAppointments &&
-                _isUpcomingAppointment(appointment)) ...[
-              const SizedBox(height: 12),
-              Align(
-                alignment: Alignment.centerRight,
-                child: FButton(
+          ),
+          if (appointment.notes != null) ...[
+            const SizedBox(height: 12),
+            Text(appointment.notes!, style: context.theme.typography.sm),
+          ],
+          if (appointment.location != null || appointment.address != null) ...[
+            const SizedBox(height: 8),
+            GestureDetector(
+              onTap:
+                  () => _openLocationInMaps(
+                    appointment.address ?? appointment.location!,
+                  ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.location_on_outlined,
+                    size: 16,
+                    color: context.theme.colors.primary,
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (appointment.location != null)
+                          Text(
+                            appointment.location!,
+                            style: context.theme.typography.base.copyWith(
+                              color: context.theme.colors.primary,
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        if (appointment.address != null &&
+                            appointment.address != appointment.location) ...[
+                          if (appointment.location != null)
+                            const SizedBox(height: 2),
+                          Text(
+                            appointment.address!,
+                            style: context.theme.typography.base.copyWith(
+                              color: context.theme.colors.primary,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          // Add edit and delete buttons for upcoming appointments only
+          if (!showPastAppointments && _isUpcomingAppointment(appointment)) ...[
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FButton(
+                  style: FButtonStyle.outline(),
+                  onPress: () => _showDeleteConfirmDialog(context, appointment),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.delete_outline, size: 16),
+                      SizedBox(width: 4),
+                      Text('Eliminar'),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                FButton(
                   style: FButtonStyle.outline(),
                   onPress: () => _showEditDialog(context, appointment),
                   child: const Row(
@@ -302,10 +312,10 @@ class _AppointmentCard extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -348,7 +358,7 @@ class _AppointmentCard extends StatelessWidget {
                           appointmentData: appointment,
                         ),
                       ),
-            child: const AppointmentEdit_Sheet(),
+            child: AppointmentEdit_Sheet(initialData: appointment),
           ),
     );
 
@@ -389,5 +399,128 @@ class _AppointmentCard extends StatelessWidget {
       // Handle error silently or show a snackbar if needed
       debugPrint('Error opening location in maps: $e');
     }
+  }
+
+  Future<void> _showDeleteConfirmDialog(
+    BuildContext context,
+    Model_Appointment appointment,
+  ) async {
+    if (appointment.id == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: FAlert(
+            title: const Text('Error: ID de cita no encontrado'),
+            style: FAlertStyle.destructive(),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+
+    // Show confirmation dialog
+    final result = await showFDialog<bool?>(
+      context: context,
+      builder:
+          (dialogContext, style, animation) => FDialog(
+            title: Row(
+              children: [
+                Icon(
+                  Icons.warning_amber,
+                  color: context.theme.colors.destructive,
+                  size: 24,
+                ),
+                const SizedBox(width: 8),
+                const Text('¿Eliminar cita?'),
+              ],
+            ),
+            body: const Text(
+              'Esta acción no se puede deshacer. La cita será eliminada permanentemente.',
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              FButton(
+                style: FButtonStyle.destructive(),
+                onPress: () => Navigator.of(dialogContext).pop(true),
+                child: const Text('Eliminar'),
+              ),
+              FButton(
+                style: FButtonStyle.outline(),
+                onPress: () => Navigator.of(dialogContext).pop(false),
+                child: const Text('Cancelar'),
+              ),
+            ],
+          ),
+    );
+
+    // If user confirmed deletion, proceed with delete
+    if (result == true && context.mounted) {
+      await _deleteAppointment(context, appointment);
+    }
+  }
+
+  Future<void> _deleteAppointment(
+    BuildContext context,
+    Model_Appointment appointment,
+  ) async {
+    // Create a bloc instance for deletion
+    final deleteBloc = AppointmentEdit_Bloc(
+      appointmentsRepository: context.read(),
+    );
+
+    // Start the deletion process
+    deleteBloc.add(
+      AppointmentEdit_Event_StartEdit(
+        appointmentId: appointment.id!,
+        appointmentData: appointment,
+      ),
+    );
+    deleteBloc.add(const AppointmentEdit_Event_Delete());
+
+    // Listen for the result
+    await deleteBloc.stream.firstWhere(
+      (state) => state.isDeleted || state.hasError,
+    );
+
+    if (deleteBloc.state.isDeleted) {
+      // Refresh the feed
+      if (context.mounted) {
+        context.read<Feed_Bloc>().add(const Feed_Event_RefreshAppointments());
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: FAlert(
+              title: const Text('Cita eliminada exitosamente'),
+              style: FAlertStyle.primary(),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } else if (deleteBloc.state.hasError) {
+      // Show error message
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: FAlert(
+              title: Text(
+                deleteBloc.state.errorMessage ?? 'Error al eliminar la cita',
+              ),
+              style: FAlertStyle.destructive(),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
+
+    // Close the bloc
+    await deleteBloc.close();
   }
 }

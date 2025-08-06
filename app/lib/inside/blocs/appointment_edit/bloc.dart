@@ -18,6 +18,7 @@ class AppointmentEdit_Bloc
     on<AppointmentEdit_Event_SaveChanges>(_onSaveChanges);
     on<AppointmentEdit_Event_Cancel>(_onCancel);
     on<AppointmentEdit_Event_Reset>(_onReset);
+    on<AppointmentEdit_Event_Delete>(_onDelete);
   }
 
   final Appointments_Repository appointmentsRepository;
@@ -127,5 +128,48 @@ class AppointmentEdit_Bloc
     log.info('Resetting appointment edit bloc');
 
     emit(const AppointmentEdit_State(status: AppointmentEdit_Status.initial));
+  }
+
+  /// Handle deleting appointment
+  Future<void> _onDelete(
+    AppointmentEdit_Event_Delete event,
+    Emitter<AppointmentEdit_State> emit,
+  ) async {
+    if (state.appointmentId == null) {
+      log.warning('Cannot delete: missing appointment ID');
+      emit(
+        state.copyWith(
+          status: AppointmentEdit_Status.error,
+          errorMessage: 'ID de cita inválido',
+        ),
+      );
+      return;
+    }
+
+    try {
+      log.info('Deleting appointment: ${state.appointmentId}');
+
+      emit(
+        state.copyWith(
+          status: AppointmentEdit_Status.deleting,
+          errorMessage: null,
+        ),
+      );
+
+      // Delete appointment from database
+      await appointmentsRepository.deleteAppointment(state.appointmentId!);
+
+      log.info('Appointment deleted successfully');
+
+      emit(state.copyWith(status: AppointmentEdit_Status.deleted));
+    } catch (e) {
+      log.severe('Error deleting appointment: $e');
+      emit(
+        state.copyWith(
+          status: AppointmentEdit_Status.error,
+          errorMessage: 'Error al eliminar la cita. Intente de nuevo.',
+        ),
+      );
+    }
   }
 }
