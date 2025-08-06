@@ -19,42 +19,33 @@ class AppointmentCapture_Page extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(8),
-        topRight: Radius.circular(8),
-      ),
-      child: FScaffold(
-        child: SafeArea(
-          child:
-              BlocConsumer<AppointmentCapture_Bloc, AppointmentCapture_State>(
-                builder: (context, state) {
-                  return SingleChildScrollView(
-                    child: AppointmentCapture_ContentWidget(state: state),
-                  );
-                },
-                listener: (context, state) {
-                  if (state.status == AppointmentCapture_Status.saved) {
-                    context.maybePop();
-                    context.read<Feed_Bloc>().add(
-                      const Feed_Event_RefreshAppointments(),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        content: FAlert(
-                          title: const Text(
-                            'Cita médica guardada exitosamente',
-                          ),
-                          style: FAlertStyle.primary(),
-                        ),
-                        behavior: SnackBarBehavior.floating,
-                      ),
-                    );
-                  }
-                },
-              ),
+    return FScaffold(
+      child: SafeArea(
+        child: BlocConsumer<AppointmentCapture_Bloc, AppointmentCapture_State>(
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: AppointmentCapture_ContentWidget(state: state),
+            );
+          },
+          listener: (context, state) {
+            if (state.status == AppointmentCapture_Status.saved) {
+              context.maybePop();
+              context.read<Feed_Bloc>().add(
+                const Feed_Event_RefreshAppointments(),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  content: FAlert(
+                    title: const Text('Cita médica guardada exitosamente'),
+                    style: FAlertStyle.primary(),
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            }
+          },
         ),
       ),
     );

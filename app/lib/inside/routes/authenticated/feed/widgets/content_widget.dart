@@ -5,10 +5,14 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../shared/models/appointment.dart';
+import '../../../../blocs/appointment_edit/bloc.dart';
+import '../../../../blocs/appointment_edit/events.dart';
 import '../../../../blocs/feed/bloc.dart';
 import '../../../../blocs/feed/event.dart';
 import '../../../../blocs/feed/state.dart';
 import '../../../../i18n/translations.g.dart';
+import '../../../../utils/appointment_conversion.dart';
+import '../../appointment_edit/widgets/edit_dialog.dart';
 
 class Feed_ContentWidget extends StatelessWidget {
   const Feed_ContentWidget({required this.state, super.key});
@@ -98,6 +102,7 @@ class Feed_ContentWidget extends StatelessWidget {
           final appointment = state.appointments[index];
 
           return Padding(
+            key: ValueKey(appointment.id ?? index),
             padding: EdgeInsets.only(
               bottom: index == state.appointments.length - 1 ? 16 : 0,
             ),
@@ -127,7 +132,7 @@ class _AppointmentCard extends StatelessWidget {
     DateTime? appointmentDate;
     if (appointment.date != null) {
       try {
-        appointmentDate = DateTime.parse(appointment.date!);
+        appointmentDate = appointment.date;
       } catch (e) {
         // Handle invalid date format
       }
@@ -208,7 +213,7 @@ class _AppointmentCard extends StatelessWidget {
                           appointment.appointmentType != null) ...[
                         Text(
                           appointment.doctorName ??
-                              appointment.appointmentType ??
+                              appointment.appointmentType?.name ??
                               'Appointment',
                           style: context.theme.typography.sm.copyWith(
                             fontWeight: FontWeight.bold,
@@ -279,10 +284,90 @@ class _AppointmentCard extends StatelessWidget {
                 ),
               ),
             ],
+            // Add edit button for upcoming appointments only
+            if (!showPastAppointments &&
+                _isUpcomingAppointment(appointment)) ...[
+              const SizedBox(height: 12),
+              Align(
+                alignment: Alignment.centerRight,
+                child: FButton(
+                  style: FButtonStyle.outline(),
+                  onPress: () => _showEditDialog(context, appointment),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.edit, size: 16),
+                      SizedBox(width: 4),
+                      Text('Editar'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
     );
+  }
+
+  bool _isUpcomingAppointment(Model_Appointment appointment) {
+    return AppointmentConversion.isUpcoming(appointment);
+  }
+
+  Future<void> _showEditDialog(
+    BuildContext context,
+    Model_Appointment appointment,
+  ) async {
+    if (appointment.id == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: FAlert(
+            title: const Text('Error: ID de cita no encontrado'),
+            style: FAlertStyle.destructive(),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+
+    final result = await showFSheet<bool?>(
+      context: context,
+      side: FLayout.btt,
+      mainAxisMaxRatio: 0.9,
+      builder:
+          (sheetContext) => BlocProvider(
+            create:
+                (context) =>
+                    AppointmentEdit_Bloc(appointmentsRepository: context.read())
+                      ..add(
+                        AppointmentEdit_Event_StartEdit(
+                          appointmentId: appointment.id!,
+                          appointmentData: appointment,
+                        ),
+                      ),
+            child: const AppointmentEdit_Sheet(),
+          ),
+    );
+
+    // Refresh the feed if the appointment was successfully updated
+    if (result == true && context.mounted) {
+      context.read<Feed_Bloc>().add(const Feed_Event_RefreshAppointments());
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: FAlert(
+            title: const Text('Cita actualizada exitosamente'),
+            style: FAlertStyle.primary(),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
   }
 
   Future<void> _openLocationInMaps(String location) async {

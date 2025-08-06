@@ -42,12 +42,16 @@ class AI_Repository extends Repository_Base {
         body: request.toJson(),
       );
 
+      log.fine('Edge function response status: ${response.status}');
+
       if (response.data == null) {
+        log.severe('No response data from ai-transcription function');
         throw Exception('No response data from ai-transcription function');
       }
 
       // Check for error in response
       if (response.data['error'] != null) {
+        log.severe('AI Transcription error: ${response.data['error']}');
         throw Exception('AI Transcription error: ${response.data['error']}');
       }
 
@@ -82,12 +86,16 @@ class AI_Repository extends Repository_Base {
         body: request.toJson(),
       );
 
+      log.fine('Edge function response status: ${response.status}');
+
       if (response.data == null) {
+        log.severe('No response data from ai-vision function');
         throw Exception('No response data from ai-vision function');
       }
 
       // Check for error in response
       if (response.data['error'] != null) {
+        log.severe('AI Vision error: ${response.data['error']}');
         throw Exception('AI Vision error: ${response.data['error']}');
       }
 
@@ -121,12 +129,16 @@ class AI_Repository extends Repository_Base {
         body: request.toJson(),
       );
 
+      log.fine('Edge function response status: ${response.status}');
+
       if (response.data == null) {
+        log.severe('No response data from ai-parse function');
         throw Exception('No response data from ai-parse function');
       }
 
       // Check for error in response
       if (response.data['error'] != null) {
+        log.severe('AI Parse error: ${response.data['error']}');
         throw Exception('AI Parse error: ${response.data['error']}');
       }
 

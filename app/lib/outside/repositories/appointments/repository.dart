@@ -174,32 +174,15 @@ class Appointments_Repository extends Repository_Base {
   /// Update an appointment
   Future<Model_Appointment> updateAppointment({
     required String appointmentId,
-    required Model_AI_AppointmentData appointmentData,
+    required Model_Appointment appointmentData,
   }) async {
     try {
       log.info('Updating appointment with ID: $appointmentId');
 
-      final appointmentMap = {
-        'doctor_name': appointmentData.doctorName,
-        'specialty': appointmentData.specialty,
-        'date': appointmentData.date,
-        'time': appointmentData.time,
-        'location': appointmentData.location,
-        'address': appointmentData.address,
-        'phone': appointmentData.phone,
-        'appointment_type': _mapAppointmentType(
-          appointmentData.appointmentType,
-        ),
-        'instructions': appointmentData.instructions,
-        'authorization_number': appointmentData.authorizationNumber,
-        'notes': appointmentData.notes,
-        'confidence': appointmentData.confidence,
-      };
-
       final response =
           await supabaseClientProvider.client
               .from('appointments')
-              .update(appointmentMap)
+              .update(appointmentData.toJson())
               .eq('id', appointmentId)
               .select()
               .single();
