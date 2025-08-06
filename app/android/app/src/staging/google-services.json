@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "521893204806",
+    "project_id": "appointment-f415f",
+    "storage_bucket": "appointment-f415f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521893204806:android:4ec1fb6bebb769c81ccb47",
+        "android_client_info": {
+          "package_name": "com.daniel.villamizar.appointment.appointment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN7leS7wtjqmroLLTIYKQ_QmugMMimJ8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521893204806:android:b5f8e87420ad430d1ccb47",
+        "android_client_info": {
+          "package_name": "com.daniel.villamizar.appointment.appointment.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN7leS7wtjqmroLLTIYKQ_QmugMMimJ8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521893204806:android:986f5297fa1f531f1ccb47",
+        "android_client_info": {
+          "package_name": "com.daniel.villamizar.appointment.appointment.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN7leS7wtjqmroLLTIYKQ_QmugMMimJ8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
