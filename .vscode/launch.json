@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "development (debug)",
+      "name": "development - dev flavor (debug)",
       "cwd": "app",
       "request": "launch",
       "type": "dart",
@@ -13,6 +13,34 @@
       "args": [
         "--target",
         "lib/app/configurations/development.dart",
+        "--flavor",
+        "dev"
+      ]
+    },
+    {
+      "name": "development - staging flavor (debug)",
+      "cwd": "app",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/app/configurations/development.dart",
+      "args": [
+        "--target",
+        "lib/app/configurations/development.dart",
+        "--flavor",
+        "staging"
+      ]
+    },
+    {
+      "name": "development - prod flavor (debug)",
+      "cwd": "app",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/app/configurations/development.dart",
+      "args": [
+        "--target",
+        "lib/app/configurations/development.dart",
+        "--flavor",
+        "prod"
       ]
     },
     {
@@ -23,14 +51,7 @@
       "program": "lib/app/configurations/production.dart",
       "args": [
         "--target",
-        "lib/app/configurations/production.dart",
-        "--web-renderer",
-        "canvaskit",
-        "--web-port",
-        "3000",
-        "--web-hostname=${env:SITE_HOST}",
-        "--dart-define",
-        "SITE_HOST=${env:SITE_HOST}"
+        "lib/app/configurations/production.dart"
       ]
     },
     {
