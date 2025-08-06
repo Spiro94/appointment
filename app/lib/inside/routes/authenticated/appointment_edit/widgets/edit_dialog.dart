@@ -32,6 +32,84 @@ class _AppointmentEdit_SheetState extends State<AppointmentEdit_Sheet>
   late final TextEditingController _notesController;
 
   ModelEnum_AppointmentType? _selectedAppointmentType;
+  FTime? _selectedTime;
+
+  // Helper method to format FTime to string (HH:MM)
+  String? _formatTime(FTime? time) {
+    if (time == null) return null;
+    return time
+        .toString(); // FTime already has a toString() that returns HH:MM format
+  }
+
+  // Method to show time picker modal
+  Future<void> _showTimePicker() async {
+    // Create a controller for the modal time picker
+    final timePickerController = FTimePickerController();
+
+    // Set initial value if we have one
+    if (_selectedTime != null) {
+      timePickerController.value = _selectedTime!;
+    }
+
+    final result = await showFSheet<FTime?>(
+      context: context,
+      side: FLayout.btt,
+      mainAxisMaxRatio: 0.7,
+      builder:
+          (sheetContext) => SafeArea(
+            top: false,
+            child: Container(
+              decoration: BoxDecoration(color: context.theme.colors.background),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Seleccionar Hora',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 200,
+                    child: FTimePicker(controller: timePickerController),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FButton(
+                        style: FButtonStyle.outline(),
+                        onPress: () => Navigator.of(sheetContext).pop(),
+                        child: const Text('Cancelar'),
+                      ),
+                      const SizedBox(width: 8),
+                      FButton(
+                        onPress: () {
+                          Navigator.of(
+                            sheetContext,
+                          ).pop(timePickerController.value);
+                        },
+                        child: const Text('Seleccionar'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+    );
+
+    // Dispose the controller
+    timePickerController.dispose();
+
+    if (result != null) {
+      setState(() {
+        _selectedTime = result;
+        // Update the time controller to display the selected time
+        _timeController.text = _formatTime(result) ?? '';
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -50,7 +128,13 @@ class _AppointmentEdit_SheetState extends State<AppointmentEdit_Sheet>
     if (initialData?.date != null) {
       _dateController.value = initialData!.date;
     }
-    _timeController = TextEditingController(text: initialData?.time ?? '');
+
+    // Initialize time controller and selected time from initial data
+    _timeController = TextEditingController();
+    if (initialData?.time != null) {
+      _selectedTime = initialData!.time;
+      _timeController.text = _formatTime(_selectedTime) ?? '';
+    }
     _locationController = TextEditingController(
       text: initialData?.location ?? '',
     );
@@ -97,10 +181,7 @@ class _AppointmentEdit_SheetState extends State<AppointmentEdit_Sheet>
               ? null
               : _specialtyController.text.trim(),
       date: _dateController.value,
-      time:
-          _timeController.text.trim().isEmpty
-              ? null
-              : _timeController.text.trim(),
+      time: _selectedTime,
       location:
           _locationController.text.trim().isEmpty
               ? null
@@ -234,7 +315,12 @@ class _AppointmentEdit_SheetState extends State<AppointmentEdit_Sheet>
                     Expanded(
                       child: FTextField(
                         controller: _timeController,
-                        label: const Text('Hora (HH:MM)'),
+                        label: const Text('Hora'),
+                        hint: 'Seleccionar hora',
+                        readOnly: true,
+                        onTap: () async {
+                          await _showTimePicker();
+                        },
                       ),
                     ),
                   ],

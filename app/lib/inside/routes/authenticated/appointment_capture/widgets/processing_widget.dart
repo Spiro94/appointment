@@ -20,7 +20,7 @@ class AppointmentCapture_ProcessingWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 80,
                   height: 80,
                   child: FProgress.circularIcon(),

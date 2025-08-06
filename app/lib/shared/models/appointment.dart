@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:forui/forui.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../utils/appointment_type_converter.dart';
 import '../utils/date_time_converter.dart';
+import '../utils/time_converter.dart';
 import 'enums/appointment_type.dart';
 import 'enums/capture_method.dart';
 
@@ -32,10 +35,12 @@ class Model_Appointment extends Equatable {
   final String? specialty;
   @JsonKey_DateTimeConverter()
   final DateTime? date; // ISO format YYYY-MM-DD
-  final String? time; // 24-hour format HH:MM
+  @JsonKey_TimeConverter()
+  final FTime? time; // 24-hour format using FTime
   final String? location;
   final String? address;
   final String? phone;
+  @JsonKey_AppointmentTypeConverter()
   final ModelEnum_AppointmentType? appointmentType;
   final ModelEnum_CaptureMethod? captureMethod;
   final String? instructions;

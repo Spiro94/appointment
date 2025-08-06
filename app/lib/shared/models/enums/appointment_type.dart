@@ -1,12 +1,13 @@
 enum ModelEnum_AppointmentType {
-  consultaGeneral('Consulta General'),
-  control('Control'),
-  procedimiento('Procedimiento'),
-  cirugia('Cirugía'),
-  terapia('Terapia'),
-  examen('Examen'),
-  otro('Otro') ;
+  consultaGeneral('Consulta General', 'consulta_general'),
+  control('Control', 'control'),
+  procedimiento('Procedimiento', 'procedimiento'),
+  cirugia('Cirugía', 'cirugia'),
+  terapia('Terapia', 'terapia'),
+  examen('Examen', 'examen'),
+  otro('Otro', 'otro');
 
   final String name;
-  const ModelEnum_AppointmentType(this.name);
+  final String key;
+  const ModelEnum_AppointmentType(this.name, this.key);
 }

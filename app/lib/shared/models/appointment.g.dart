@@ -12,13 +12,12 @@ Model_Appointment _$Model_AppointmentFromJson(Map<String, dynamic> json) =>
       doctorName: json['doctor_name'] as String?,
       specialty: json['specialty'] as String?,
       date: const JsonKey_DateTimeConverter().fromJson(json['date'] as String?),
-      time: json['time'] as String?,
+      time: const JsonKey_TimeConverter().fromJson(json['time'] as String?),
       location: json['location'] as String?,
       address: json['address'] as String?,
       phone: json['phone'] as String?,
-      appointmentType: $enumDecodeNullable(
-        _$ModelEnum_AppointmentTypeEnumMap,
-        json['appointment_type'],
+      appointmentType: const JsonKey_AppointmentTypeConverter().fromJson(
+        json['appointment_type'] as String?,
       ),
       captureMethod: $enumDecodeNullable(
         _$ModelEnum_CaptureMethodEnumMap,
@@ -37,27 +36,18 @@ Map<String, dynamic> _$Model_AppointmentToJson(
   'doctor_name': instance.doctorName,
   'specialty': instance.specialty,
   'date': const JsonKey_DateTimeConverter().toJson(instance.date),
-  'time': instance.time,
+  'time': const JsonKey_TimeConverter().toJson(instance.time),
   'location': instance.location,
   'address': instance.address,
   'phone': instance.phone,
-  'appointment_type':
-      _$ModelEnum_AppointmentTypeEnumMap[instance.appointmentType],
+  'appointment_type': const JsonKey_AppointmentTypeConverter().toJson(
+    instance.appointmentType,
+  ),
   'capture_method': _$ModelEnum_CaptureMethodEnumMap[instance.captureMethod],
   'instructions': instance.instructions,
   'authorization_number': instance.authorizationNumber,
   'notes': instance.notes,
   'confidence': instance.confidence,
-};
-
-const _$ModelEnum_AppointmentTypeEnumMap = {
-  ModelEnum_AppointmentType.consultaGeneral: 'consultaGeneral',
-  ModelEnum_AppointmentType.control: 'control',
-  ModelEnum_AppointmentType.procedimiento: 'procedimiento',
-  ModelEnum_AppointmentType.cirugia: 'cirugia',
-  ModelEnum_AppointmentType.terapia: 'terapia',
-  ModelEnum_AppointmentType.examen: 'examen',
-  ModelEnum_AppointmentType.otro: 'otro',
 };
 
 const _$ModelEnum_CaptureMethodEnumMap = {
