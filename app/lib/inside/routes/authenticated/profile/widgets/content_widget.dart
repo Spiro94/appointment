@@ -25,11 +25,11 @@ class Profile_ContentWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    backgroundColor: context.theme.colors.primary,
                     child: Icon(
                       Icons.person,
                       size: 30,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: context.theme.colors.primaryForeground,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -41,8 +41,9 @@ class Profile_ContentWidget extends StatelessWidget {
                       else
                         Text(
                           state.userName,
-                          style: Theme.of(context).textTheme.titleLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                          style: context.theme.typography.lg.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                     ],
                   ),
@@ -57,7 +58,7 @@ class Profile_ContentWidget extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: FButton(
-            style: FButtonStyle.destructive(),
+            style: FButtonStyle.primary(),
             onPress:
                 state.isLoading
                     ? null

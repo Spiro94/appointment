@@ -49,8 +49,8 @@ class _AppointmentCapture_AudioCaptureCardState
                 decoration: BoxDecoration(
                   color:
                       _isRecording
-                          ? Theme.of(context).colorScheme.errorContainer
-                          : Theme.of(context).colorScheme.primaryContainer,
+                          ? context.theme.colors.destructive
+                          : context.theme.colors.secondary,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Icon(
@@ -58,8 +58,8 @@ class _AppointmentCapture_AudioCaptureCardState
                   size: 32,
                   color:
                       _isRecording
-                          ? Theme.of(context).colorScheme.onErrorContainer
-                          : Theme.of(context).colorScheme.onPrimaryContainer,
+                          ? context.theme.colors.destructiveForeground
+                          : context.theme.colors.foreground,
                 ),
               ),
               const SizedBox(width: 20),
@@ -70,7 +70,7 @@ class _AppointmentCapture_AudioCaptureCardState
                   children: [
                     Text(
                       _isRecording ? 'Grabando...' : 'Grabar Audio',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: context.theme.typography.lg.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
@@ -80,8 +80,8 @@ class _AppointmentCapture_AudioCaptureCardState
                       _isRecording
                           ? 'Toque para detener la grabación'
                           : 'Cuéntanos sobre su cita médica',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      style: context.theme.typography.base.copyWith(
+                        color: context.theme.colors.mutedForeground,
                         fontSize: 16,
                       ),
                     ),
@@ -93,14 +93,14 @@ class _AppointmentCapture_AudioCaptureCardState
                   width: 12,
                   height: 12,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.error,
+                    color: context.theme.colors.destructive,
                     shape: BoxShape.circle,
                   ),
                 )
               else
                 Icon(
                   Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  color: context.theme.colors.mutedForeground,
                 ),
             ],
           ),

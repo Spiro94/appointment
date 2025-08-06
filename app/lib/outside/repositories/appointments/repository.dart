@@ -96,6 +96,58 @@ class Appointments_Repository extends Repository_Base {
     }
   }
 
+  /// Get future appointments for the current user (from today onwards)
+  Future<List<Model_Appointment>> getFutureAppointments() async {
+    try {
+      log.info('Fetching future appointments');
+
+      final today = DateTime.now().toIso8601String().split('T')[0];
+
+      final response = await supabaseClientProvider.client
+          .from('appointments')
+          .select()
+          .filter('deleted_at', 'is', null)
+          .gte('date', today)
+          .order('date', ascending: true)
+          .order('time', ascending: true);
+
+      log.info('Retrieved ${response.length} future appointments');
+
+      return response.map<Model_Appointment>((appointment) {
+        return Model_Appointment.fromJson(appointment);
+      }).toList();
+    } catch (e) {
+      log.severe('Error fetching future appointments: $e');
+      rethrow;
+    }
+  }
+
+  /// Get past appointments for the current user (before today)
+  Future<List<Model_Appointment>> getPastAppointments() async {
+    try {
+      log.info('Fetching past appointments');
+
+      final today = DateTime.now().toIso8601String().split('T')[0];
+
+      final response = await supabaseClientProvider.client
+          .from('appointments')
+          .select()
+          .filter('deleted_at', 'is', null)
+          .lt('date', today)
+          .order('date', ascending: false)
+          .order('time', ascending: false);
+
+      log.info('Retrieved ${response.length} past appointments');
+
+      return response.map<Model_Appointment>((appointment) {
+        return Model_Appointment.fromJson(appointment);
+      }).toList();
+    } catch (e) {
+      log.severe('Error fetching past appointments: $e');
+      rethrow;
+    }
+  }
+
   /// Get appointments for a specific date
   Future<List<Model_Appointment>> getAppointmentsByDate(String date) async {
     try {

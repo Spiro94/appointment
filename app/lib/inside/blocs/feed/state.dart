@@ -9,11 +9,13 @@ class Feed_State extends Equatable {
     this.appointments = const [],
     this.status = Feed_Status.initial,
     this.error,
+    this.showPastAppointments = false,
   });
 
   final List<Model_Appointment> appointments;
   final Feed_Status status;
   final String? error;
+  final bool showPastAppointments;
 
   // Convenience getters for status checking
   bool get isInitial => status == Feed_Status.initial;
@@ -25,14 +27,21 @@ class Feed_State extends Equatable {
     List<Model_Appointment>? appointments,
     Feed_Status? status,
     String? error,
+    bool? showPastAppointments,
   }) {
     return Feed_State(
       appointments: appointments ?? this.appointments,
       status: status ?? this.status,
       error: error,
+      showPastAppointments: showPastAppointments ?? this.showPastAppointments,
     );
   }
 
   @override
-  List<Object?> get props => [appointments, status, error];
+  List<Object?> get props => [
+    appointments,
+    status,
+    error,
+    showPastAppointments,
+  ];
 }

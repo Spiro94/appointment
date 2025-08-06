@@ -26,13 +26,13 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  color: context.theme.colors.secondary,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Icon(
                   Icons.camera_alt,
                   size: 32,
-                  color: Theme.of(context).colorScheme.onSecondaryContainer,
+                  color: context.theme.colors.foreground,
                 ),
               ),
               const SizedBox(width: 20),
@@ -43,7 +43,7 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
                   children: [
                     Text(
                       'Tomar Foto',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: context.theme.typography.lg.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
@@ -51,8 +51,8 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       'Fotografía la orden médica o documento',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      style: context.theme.typography.base.copyWith(
+                        color: context.theme.colors.mutedForeground,
                         fontSize: 16,
                       ),
                     ),
@@ -61,7 +61,7 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
               ),
               Icon(
                 Icons.arrow_forward_ios,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                color: context.theme.colors.mutedForeground,
               ),
             ],
           ),

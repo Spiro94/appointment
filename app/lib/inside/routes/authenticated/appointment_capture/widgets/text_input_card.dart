@@ -22,13 +22,13 @@ class AppointmentCapture_TextInputCard extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.tertiaryContainer,
+                  color: context.theme.colors.secondary,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Icon(
                   Icons.edit,
                   size: 32,
-                  color: Theme.of(context).colorScheme.onTertiaryContainer,
+                  color: context.theme.colors.foreground,
                 ),
               ),
               const SizedBox(width: 20),
@@ -39,7 +39,7 @@ class AppointmentCapture_TextInputCard extends StatelessWidget {
                   children: [
                     Text(
                       'Escribir',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      style: context.theme.typography.lg.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
@@ -47,8 +47,8 @@ class AppointmentCapture_TextInputCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       'Escribe los detalles de la cita',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      style: context.theme.typography.base.copyWith(
+                        color: context.theme.colors.mutedForeground,
                         fontSize: 16,
                       ),
                     ),
@@ -57,7 +57,7 @@ class AppointmentCapture_TextInputCard extends StatelessWidget {
               ),
               Icon(
                 Icons.arrow_forward_ios,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                color: context.theme.colors.mutedForeground,
               ),
             ],
           ),
@@ -110,8 +110,8 @@ class _AppointmentCapture_TextInputDialogState
           children: [
             Text(
               'Escribe los detalles de tu cita médica (fecha, hora, doctor, etc.):',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              style: context.theme.typography.sm.copyWith(
+                color: context.theme.colors.mutedForeground,
               ),
             ),
             const SizedBox(height: 16),

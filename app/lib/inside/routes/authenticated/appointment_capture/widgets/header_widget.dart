@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 
 /// Header widget for appointment capture page
 class AppointmentCapture_HeaderWidget extends StatelessWidget {
@@ -17,13 +18,13 @@ class AppointmentCapture_HeaderWidget extends StatelessWidget {
                 Icon(
                   Icons.medical_information,
                   size: 32,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: context.theme.colors.primary,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     '¿Cómo quiere registrar su cita?',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: context.theme.typography.lg.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -34,8 +35,8 @@ class AppointmentCapture_HeaderWidget extends StatelessWidget {
             Text(
               'Puede grabar un audio, tomar una foto de la orden médica, '
               'o escribir la información directamente.',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              style: context.theme.typography.base.copyWith(
+                color: context.theme.colors.mutedForeground,
                 height: 1.4,
               ),
             ),

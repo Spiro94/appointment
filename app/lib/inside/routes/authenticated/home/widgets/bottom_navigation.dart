@@ -31,35 +31,47 @@ class _Home_BottomNavigationState extends State<Home_BottomNavigation> {
         return Scaffold(
           body: child,
           floatingActionButton: FloatingActionButton(
+            shape: const CircleBorder(),
+            backgroundColor: context.theme.colors.primary,
             onPressed: () => _showAppointmentCaptureDialog(context),
-            child: const Icon(Icons.add),
+            child: const Icon(Icons.add, color: Colors.white),
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+            backgroundColor: context.theme.colors.secondary,
             itemCount: routes.length,
-            leftCornerRadius: 32,
-            rightCornerRadius: 32,
+            height: 70,
             gapLocation: GapLocation.center,
             tabBuilder: (index, isActive) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(iconList[index], size: 24, color: Colors.black),
+                  Icon(
+                    iconList[index],
+                    size: 24,
+                    color:
+                        isActive ? context.theme.colors.primary : Colors.black,
+                  ),
                   const SizedBox(height: 4),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
                       routeNameList[index],
                       maxLines: 1,
-                      style: const TextStyle(fontSize: 12),
+                      style: TextStyle(
+                        color:
+                            isActive
+                                ? context.theme.colors.primary
+                                : Colors.black,
+                      ),
                     ),
                   ),
                 ],
               );
             },
-            activeIndex: 0,
+            activeIndex: tabsRouter.activeIndex,
             onTap: (index) {
               tabsRouter.setActiveIndex(index);
             },

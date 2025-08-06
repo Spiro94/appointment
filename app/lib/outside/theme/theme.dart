@@ -36,10 +36,10 @@ final _materialThemeData_dark = _materialThemeData_light.copyWith(
   scaffoldBackgroundColor: _foruiThemeData_dark.scaffoldStyle.backgroundColor,
 );
 
-final _foruiThemeData_light = FThemes.zinc.light.copyWith(
-  textFieldStyle: FThemes.zinc.light.textFieldStyle.copyWith(),
+final _foruiThemeData_light = FThemes.blue.light.copyWith(
+  textFieldStyle: FThemes.blue.light.textFieldStyle.copyWith(),
 );
 
-final _foruiThemeData_dark = FThemes.zinc.dark.copyWith(
-  textFieldStyle: FThemes.zinc.dark.textFieldStyle.copyWith(),
+final _foruiThemeData_dark = FThemes.blue.dark.copyWith(
+  textFieldStyle: FThemes.blue.dark.textFieldStyle.copyWith(),
 );

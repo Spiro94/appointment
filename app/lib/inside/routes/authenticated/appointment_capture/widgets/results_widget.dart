@@ -26,7 +26,7 @@ class AppointmentCapture_InfoRowWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+          Icon(icon, size: 20, color: context.theme.colors.primary),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -34,17 +34,17 @@ class AppointmentCapture_InfoRowWidget extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  style: context.theme.typography.xs.copyWith(
+                    color: context.theme.colors.mutedForeground,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   value,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+                  style: context.theme.typography.base.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
@@ -81,15 +81,14 @@ class AppointmentCapture_ResultsWidget extends StatelessWidget {
                     Icon(
                       Icons.check_circle,
                       size: 32,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      color: context.theme.colors.foreground,
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         'Información capturada',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+                        style: context.theme.typography.lg.copyWith(
+                          color: context.theme.colors.foreground,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -160,7 +159,7 @@ class AppointmentCapture_ResultsWidget extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.psychology,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: context.theme.colors.primary,
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -169,23 +168,20 @@ class AppointmentCapture_ResultsWidget extends StatelessWidget {
                             children: [
                               Text(
                                 'Confianza de la información',
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: context.theme.typography.base,
                               ),
                               const SizedBox(height: 4),
                               LinearProgressIndicator(
                                 value: appointmentData.confidence! / 100,
-                                backgroundColor:
-                                    Theme.of(
-                                      context,
-                                    ).colorScheme.surfaceContainerHigh,
+                                backgroundColor: context.theme.colors.muted,
                                 valueColor: AlwaysStoppedAnimation<Color>(
-                                  Theme.of(context).colorScheme.primary,
+                                  context.theme.colors.primary,
                                 ),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 '${appointmentData.confidence}%',
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: context.theme.typography.xs,
                               ),
                             ],
                           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 
 import '../../../../blocs/appointment_capture/state.dart';
 
@@ -22,15 +23,12 @@ class AppointmentCapture_ProcessingWidget extends StatelessWidget {
                 SizedBox(
                   width: 80,
                   height: 80,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 6,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  child: FProgress.circularIcon(),
                 ),
                 const SizedBox(height: 24),
                 Text(
                   _getTitle(),
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  style: context.theme.typography.xl.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
@@ -38,8 +36,8 @@ class AppointmentCapture_ProcessingWidget extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   _getDescription(),
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  style: context.theme.typography.base.copyWith(
+                    color: context.theme.colors.mutedForeground,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -51,13 +49,13 @@ class AppointmentCapture_ProcessingWidget extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer,
+                      color: context.theme.colors.secondary,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       state.processingStep!,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      style: context.theme.typography.sm.copyWith(
+                        color: context.theme.colors.foreground,
                         fontWeight: FontWeight.w500,
                       ),
                       textAlign: TextAlign.center,

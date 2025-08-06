@@ -46,21 +46,21 @@ class AppointmentCapture_ErrorWidget extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: Theme.of(context).colorScheme.error,
+              color: context.theme.colors.destructive,
             ),
             const SizedBox(height: 16),
             Text(
               'Error al procesar',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Theme.of(context).colorScheme.onErrorContainer,
+              style: context.theme.typography.xl.copyWith(
+                color: context.theme.colors.destructiveForeground,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 12),
             Text(
               state.errorMessage ?? 'Ocurrió un error inesperado',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onErrorContainer,
+              style: context.theme.typography.base.copyWith(
+                color: context.theme.colors.destructiveForeground,
               ),
               textAlign: TextAlign.center,
             ),

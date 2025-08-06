@@ -18,7 +18,7 @@ class Feed_ContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (state.isLoading) {
-      return const Center(child: CircularProgressIndicator.adaptive());
+      return const Center(child: FProgress.circularIcon());
     }
 
     if (state.isError && state.error != null) {
@@ -29,12 +29,12 @@ class Feed_ContentWidget extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: Theme.of(context).colorScheme.error,
+              color: context.theme.colors.destructive,
             ),
             const SizedBox(height: 16),
             Text(
               state.error!,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: context.theme.typography.base,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
@@ -57,21 +57,27 @@ class Feed_ContentWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.calendar_today_outlined,
+              state.showPastAppointments
+                  ? Icons.history_outlined
+                  : Icons.calendar_today_outlined,
               size: 64,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              color: context.theme.colors.mutedForeground,
             ),
             const SizedBox(height: 16),
             Text(
-              context.t.home.feed.empty,
-              style: Theme.of(context).textTheme.titleLarge,
+              state.showPastAppointments
+                  ? 'No tienes citas pasadas'
+                  : context.t.home.feed.empty,
+              style: context.theme.typography.lg,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              context.t.home.feed.emptySubtitle,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              state.showPastAppointments
+                  ? 'Cuando tengas citas completadas aparecerán aquí'
+                  : context.t.home.feed.emptySubtitle,
+              style: context.theme.typography.sm.copyWith(
+                color: context.theme.colors.mutedForeground,
               ),
               textAlign: TextAlign.center,
             ),
@@ -95,7 +101,10 @@ class Feed_ContentWidget extends StatelessWidget {
             padding: EdgeInsets.only(
               bottom: index == state.appointments.length - 1 ? 16 : 0,
             ),
-            child: _AppointmentCard(appointment: appointment),
+            child: _AppointmentCard(
+              appointment: appointment,
+              showPastAppointments: state.showPastAppointments,
+            ),
           );
         },
       ),
@@ -104,9 +113,13 @@ class Feed_ContentWidget extends StatelessWidget {
 }
 
 class _AppointmentCard extends StatelessWidget {
-  const _AppointmentCard({required this.appointment});
+  const _AppointmentCard({
+    required this.appointment,
+    required this.showPastAppointments,
+  });
 
   final Model_Appointment appointment;
+  final bool showPastAppointments;
 
   @override
   Widget build(BuildContext context) {
@@ -136,12 +149,18 @@ class _AppointmentCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
+                    color:
+                        showPastAppointments
+                            ? context.theme.colors.muted
+                            : context.theme.colors.secondary,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
-                    Icons.calendar_today,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    showPastAppointments ? Icons.history : Icons.calendar_today,
+                    color:
+                        showPastAppointments
+                            ? context.theme.colors.primary
+                            : context.theme.colors.foreground,
                     size: 20,
                   ),
                 ),
@@ -151,10 +170,37 @@ class _AppointmentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (appointment.specialty != null) ...[
-                        Text(
-                          appointment.specialty!,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                appointment.specialty!,
+                                style: context.theme.typography.base.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            if (showPastAppointments) ...[
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: context.theme.colors.muted,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  'Completada',
+                                  style: context.theme.typography.sm.copyWith(
+                                    color: context.theme.colors.mutedForeground,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
                         const SizedBox(height: 4),
                       ],
@@ -164,17 +210,16 @@ class _AppointmentCard extends StatelessWidget {
                           appointment.doctorName ??
                               appointment.appointmentType ??
                               'Appointment',
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                          style: context.theme.typography.sm.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 4),
                       ],
                       Text(
                         '${appointmentDate != null ? dayOfWeek.format(appointmentDate) : ''}, ${appointmentDate != null ? dateFormatter.format(appointmentDate) : appointment.date ?? 'No date'} at ${appointment.time ?? 'No time'}',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withValues(alpha: 0.7),
+                        style: context.theme.typography.base.copyWith(
+                          color: context.theme.colors.mutedForeground,
                         ),
                       ),
                     ],
@@ -184,10 +229,7 @@ class _AppointmentCard extends StatelessWidget {
             ),
             if (appointment.notes != null) ...[
               const SizedBox(height: 12),
-              Text(
-                appointment.notes!,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+              Text(appointment.notes!, style: context.theme.typography.sm),
             ],
             if (appointment.location != null ||
                 appointment.address != null) ...[
@@ -202,7 +244,7 @@ class _AppointmentCard extends StatelessWidget {
                     Icon(
                       Icons.location_on_outlined,
                       size: 16,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: context.theme.colors.primary,
                     ),
                     const SizedBox(width: 4),
                     Expanded(
@@ -212,10 +254,8 @@ class _AppointmentCard extends StatelessWidget {
                           if (appointment.location != null)
                             Text(
                               appointment.location!,
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).colorScheme.primary,
+                              style: context.theme.typography.base.copyWith(
+                                color: context.theme.colors.primary,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -226,10 +266,8 @@ class _AppointmentCard extends StatelessWidget {
                               const SizedBox(height: 2),
                             Text(
                               appointment.address!,
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).colorScheme.primary,
+                              style: context.theme.typography.base.copyWith(
+                                color: context.theme.colors.primary,
                                 decoration: TextDecoration.underline,
                               ),
                             ),

@@ -15,14 +15,7 @@ class Profile_Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FScaffold(
-      header: FHeader(
-        title: Text(
-          'Perfil',
-          style: Theme.of(
-            context,
-          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
-        ),
-      ),
+      header: const FHeader(title: Text('Perfil')),
       child: BlocBuilder<Profile_Bloc, Profile_State>(
         builder: (context, state) {
           return Profile_ContentWidget(state: state);

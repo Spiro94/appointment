@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 
 import 'audio_capture_card.dart';
 import 'photo_capture_card.dart';
@@ -17,9 +18,9 @@ class AppointmentCapture_MethodsWidget extends StatelessWidget {
         children: [
           Text(
             '¿Cómo quieres capturar la información de tu cita?',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            style: context.theme.typography.xl.copyWith(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: context.theme.colors.foreground,
             ),
             textAlign: TextAlign.center,
           ),

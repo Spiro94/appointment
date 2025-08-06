@@ -14,3 +14,7 @@ class Feed_Event_LoadAppointments extends Feed_Event {
 class Feed_Event_RefreshAppointments extends Feed_Event {
   const Feed_Event_RefreshAppointments();
 }
+
+class Feed_Event_TogglePastAppointments extends Feed_Event {
+  const Feed_Event_TogglePastAppointments();
+}
