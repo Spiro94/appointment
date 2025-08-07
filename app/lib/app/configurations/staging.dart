@@ -1,34 +1,25 @@
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart' as logging;
 
 import '../../inside/i18n/translations.g.dart';
-import '../../outside/client_providers/sentry/client_provider_configuration.dart';
 import '../../outside/client_providers/supabase/client_provider_configuration.dart';
 import '../../outside/effect_providers/mixpanel/effect_provider_configuration.dart';
 import '../../outside/theme/theme.dart';
 import '../runner.dart';
 import 'configuration.dart';
 
-// TODO: update CHANGE_ME lines
-
 void main() {
   final configuration = AppConfiguration(
     appLocale: AppLocale.esCo,
-    logLevel: logging.Level.INFO,
+    logLevel: logging.Level.ALL,
     theme: OutsideThemes.lightTheme,
     deepLinkBaseUri:
-        kIsWeb
-            ? 'CHANGE_ME'
-            : 'com.gadfly361.gadflyfluttertemplate.deep://deeplink-callback',
+        'com.daniel.villamizar.appointment.appointment.staging.deep://deeplink-callback',
     clientProvidersConfigurations: ClientProvidersConfigurations(
-      sentry: const Sentry_ClientProvider_Configuration(
-        dsn: 'CHANGE_ME',
-        environment: 'production',
-        tracesSampleRate: 0,
-      ),
+      sentry: null,
       supabase: const Supabase_ClientProvider_Configuration(
-        url: 'CHANGE_ME',
-        anonKey: '''CHANGE_ME''',
+        url: 'https://ahrwudgekwmsrddktfsl.supabase.co',
+        anonKey:
+            '''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFocnd1ZGdla3dtc3JkZGt0ZnNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ1MTc5NzYsImV4cCI6MjA3MDA5Mzk3Nn0.VwJJrZ0yXI4I016Ubgf21Xgub2vmjcKnEooRYkvjDco''',
       ),
     ),
     effectProvidersConfigurations: EffectProvidersConfigurations(

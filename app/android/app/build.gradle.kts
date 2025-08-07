@@ -8,10 +8,13 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
+import java.util.Properties
+import java.io.FileInputStream
+
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -40,11 +43,11 @@ android {
     }
 
     signingConfigs {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['storePassword']
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String?
+            keyPassword = keystoreProperties["keyPassword"] as String?
+            storeFile = keystoreProperties["storeFile"]?.let { rootProject.file(it) }
+            storePassword = keystoreProperties["storePassword"] as String?
         }
     }
 
@@ -56,6 +59,7 @@ android {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
             resValue("string", "app_name", "Appointment Dev")
+            resValue("string", "deep_link_scheme", "com.daniel.villamizar.appointment.appointment.dev.deep")
         }
         
         create("staging") {
@@ -63,11 +67,13 @@ android {
             applicationIdSuffix = ".staging"
             versionNameSuffix = "-staging"
             resValue("string", "app_name", "Appointment Staging")
+            resValue("string", "deep_link_scheme", "com.daniel.villamizar.appointment.appointment.staging.deep")
         }
         
         create("prod") {
             dimension = "environment"
             resValue("string", "app_name", "Appointment")
+            resValue("string", "deep_link_scheme", "com.daniel.villamizar.appointment.appointment.deep")
         }
     }
 

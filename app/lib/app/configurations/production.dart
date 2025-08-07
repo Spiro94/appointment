@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart' as logging;
 
 import '../../inside/i18n/translations.g.dart';
@@ -9,17 +8,13 @@ import '../../outside/theme/theme.dart';
 import '../runner.dart';
 import 'configuration.dart';
 
-// TODO: update CHANGE_ME lines
-
 void main() {
   final configuration = AppConfiguration(
     appLocale: AppLocale.esCo,
     logLevel: logging.Level.INFO,
     theme: OutsideThemes.lightTheme,
     deepLinkBaseUri:
-        kIsWeb
-            ? 'CHANGE_ME'
-            : 'com.gadfly361.gadflyfluttertemplate.deep://deeplink-callback',
+        'com.daniel.villamizar.appointment.appointment.deep://deeplink-callback',
     clientProvidersConfigurations: ClientProvidersConfigurations(
       sentry: const Sentry_ClientProvider_Configuration(
         dsn: 'CHANGE_ME',

@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "development - dev flavor (debug)",
+      "name": "Dev flavor (debug)",
       "cwd": "app",
       "request": "launch",
       "type": "dart",
@@ -18,40 +18,29 @@
       ]
     },
     {
-      "name": "development - staging flavor (debug)",
+      "name": "Staging flavor (debug)",
       "cwd": "app",
       "request": "launch",
       "type": "dart",
-      "program": "lib/app/configurations/development.dart",
+      "program": "lib/app/configurations/staging.dart",
       "args": [
         "--target",
-        "lib/app/configurations/development.dart",
+        "lib/app/configurations/staging.dart",
         "--flavor",
         "staging"
       ]
     },
     {
-      "name": "development - prod flavor (debug)",
-      "cwd": "app",
-      "request": "launch",
-      "type": "dart",
-      "program": "lib/app/configurations/development.dart",
-      "args": [
-        "--target",
-        "lib/app/configurations/development.dart",
-        "--flavor",
-        "prod"
-      ]
-    },
-    {
-      "name": "production (debug)",
+      "name": "Prod flavor (debug)",
       "cwd": "app",
       "request": "launch",
       "type": "dart",
       "program": "lib/app/configurations/production.dart",
       "args": [
         "--target",
-        "lib/app/configurations/production.dart"
+        "lib/app/configurations/production.dart",
+        "--flavor",
+        "prod"
       ]
     },
     {
