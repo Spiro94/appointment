@@ -6,6 +6,7 @@ import 'package:forui/forui.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../../shared/utils/snackbar_utils.dart';
 import '../../../../blocs/appointment_capture/bloc.dart';
 import '../../../../blocs/appointment_capture/events.dart';
 
@@ -165,13 +166,10 @@ class AppointmentCapture_PhotoCaptureCard extends StatelessWidget {
   }
 
   void _showErrorSnackbar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: FAlert(title: Text(message), style: FAlertStyle.destructive()),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        behavior: SnackBarBehavior.floating,
-      ),
+    SnackbarUtils.showFAlertSnackbar(
+      context,
+      text: message,
+      alertStyle: FAlertStyle.destructive(),
     );
   }
 }

@@ -52,7 +52,7 @@ class AppointmentCapture_ErrorWidget extends StatelessWidget {
             Text(
               'Error al procesar',
               style: context.theme.typography.xl.copyWith(
-                color: context.theme.colors.destructiveForeground,
+                color: context.theme.colors.foreground,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -60,7 +60,7 @@ class AppointmentCapture_ErrorWidget extends StatelessWidget {
             Text(
               state.errorMessage ?? 'Ocurrió un error inesperado',
               style: context.theme.typography.base.copyWith(
-                color: context.theme.colors.destructiveForeground,
+                color: context.theme.colors.foreground,
               ),
               textAlign: TextAlign.center,
             ),

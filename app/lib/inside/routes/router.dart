@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../shared/mixins/logging.dart';
 import '../blocs/auth/bloc.dart';
 import 'authenticated/appointment_capture/page.dart';
+import 'authenticated/family_setup/page.dart';
 import 'authenticated/feed/page.dart';
 import 'authenticated/guard.dart';
 import 'authenticated/home/page.dart';
@@ -64,6 +65,7 @@ class Routes_router extends RootStackRouter with SharedMixin_Logging {
       page: Authenticated_Routes.page,
       guards: [Authenticated_Guard(authBloc: authBloc)],
       children: [
+        AutoRoute(path: 'family-setup', page: FamilySetup_Route.page),
         AutoRoute(
           path: 'home',
           page: Home_Route.page,

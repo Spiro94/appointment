@@ -17,6 +17,7 @@ import '../outside/repositories/ai/repository.dart';
 import '../outside/repositories/all.dart';
 import '../outside/repositories/appointments/repository.dart';
 import '../outside/repositories/auth/repository.dart';
+import '../outside/repositories/families/repository.dart';
 import 'builder.dart';
 import 'configurations/configuration.dart';
 
@@ -77,6 +78,10 @@ Future<void> appRunner({required AppConfiguration configuration}) async {
       effectProviders: effectProviders,
     ),
     appointmentsRepository: Appointments_Repository(
+      supabaseClientProvider: clientProviders.supabaseClientProvider,
+      effectProviders: effectProviders,
+    ),
+    familiesRepository: Families_Repository(
       supabaseClientProvider: clientProviders.supabaseClientProvider,
       effectProviders: effectProviders,
     ),

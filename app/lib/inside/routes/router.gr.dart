@@ -59,6 +59,22 @@ class EmailVerificationLinkSent_Route extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [FamilySetup_Page]
+class FamilySetup_Route extends PageRouteInfo<void> {
+  const FamilySetup_Route({List<PageRouteInfo>? children})
+    : super(FamilySetup_Route.name, initialChildren: children);
+
+  static const String name = 'FamilySetup_Route';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FamilySetup_Page();
+    },
+  );
+}
+
+/// generated route for
 /// [Feed_Page]
 class Feed_Route extends PageRouteInfo<void> {
   const Feed_Route({List<PageRouteInfo>? children})

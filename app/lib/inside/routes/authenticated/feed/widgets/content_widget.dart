@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../shared/models/appointment.dart';
+import '../../../../../shared/utils/snackbar_utils.dart';
 import '../../../../blocs/appointment_edit/bloc.dart';
 import '../../../../blocs/appointment_edit/events.dart';
 import '../../../../blocs/feed/bloc.dart';
@@ -329,16 +330,10 @@ class _AppointmentCard extends StatelessWidget {
     Model_Appointment appointment,
   ) async {
     if (appointment.id == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: FAlert(
-            title: const Text('Error: ID de cita no encontrado'),
-            style: FAlertStyle.destructive(),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          behavior: SnackBarBehavior.floating,
-        ),
+      SnackbarUtils.showFAlertSnackbar(
+        context,
+        text: 'Error: ID de cita no encontrado',
+        alertStyle: FAlertStyle.destructive(),
       );
       return;
     }
@@ -366,16 +361,9 @@ class _AppointmentCard extends StatelessWidget {
     if (result == true && context.mounted) {
       context.read<Feed_Bloc>().add(const Feed_Event_RefreshAppointments());
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: FAlert(
-            title: const Text('Cita actualizada exitosamente'),
-            style: FAlertStyle.primary(),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          behavior: SnackBarBehavior.floating,
-        ),
+      SnackbarUtils.showFAlertSnackbar(
+        context,
+        text: 'Cita actualizada exitosamente',
       );
     }
   }
@@ -406,16 +394,10 @@ class _AppointmentCard extends StatelessWidget {
     Model_Appointment appointment,
   ) async {
     if (appointment.id == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: FAlert(
-            title: const Text('Error: ID de cita no encontrado'),
-            style: FAlertStyle.destructive(),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          behavior: SnackBarBehavior.floating,
-        ),
+      SnackbarUtils.showFAlertSnackbar(
+        context,
+        text: 'Error: ID de cita no encontrado',
+        alertStyle: FAlertStyle.destructive(),
       );
       return;
     }
@@ -489,33 +471,18 @@ class _AppointmentCard extends StatelessWidget {
       if (context.mounted) {
         context.read<Feed_Bloc>().add(const Feed_Event_RefreshAppointments());
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: FAlert(
-              title: const Text('Cita eliminada exitosamente'),
-              style: FAlertStyle.primary(),
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            behavior: SnackBarBehavior.floating,
-          ),
+        SnackbarUtils.showFAlertSnackbar(
+          context,
+          text: 'Cita eliminada exitosamente',
         );
       }
     } else if (deleteBloc.state.hasError) {
       // Show error message
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: FAlert(
-              title: Text(
-                deleteBloc.state.errorMessage ?? 'Error al eliminar la cita',
-              ),
-              style: FAlertStyle.destructive(),
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            behavior: SnackBarBehavior.floating,
-          ),
+        SnackbarUtils.showFAlertSnackbar(
+          context,
+          text: deleteBloc.state.errorMessage ?? 'Error al eliminar la cita',
+          alertStyle: FAlertStyle.destructive(),
         );
       }
     }

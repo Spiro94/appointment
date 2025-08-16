@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forui/forui.dart';
 
+import '../../../../../shared/utils/snackbar_utils.dart';
 import '../../../../blocs/reset_password/bloc.dart';
 import '../../../../blocs/reset_password/state.dart';
 import '../../../../i18n/translations.g.dart';
@@ -23,32 +24,19 @@ class ResetPassword_Listener_StatusChange extends StatelessWidget {
           case ResetPassword_Status.resetPasswordError:
             {
               if (state.errorMessage != null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    content: FAlert(
-                      title: Text(state.errorMessage!),
-                      style: FAlertStyle.destructive(),
-                    ),
-                    behavior: SnackBarBehavior.floating,
-                  ),
+                SnackbarUtils.showFAlertSnackbar(
+                  context,
+                  text: state.errorMessage!,
+                  alertStyle: FAlertStyle.destructive(),
                 );
               }
             }
           case ResetPassword_Status.resetPasswordSuccess:
             {
               context.router.navigate(const Home_Route());
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  content: FAlert(
-                    title: Text(context.t.resetPassword.form.submit.success),
-                    style: FAlertStyle.primary(),
-                  ),
-                  behavior: SnackBarBehavior.floating,
-                ),
+              SnackbarUtils.showFAlertSnackbar(
+                context,
+                text: context.t.resetPassword.form.submit.success,
               );
             }
           case ResetPassword_Status.sendResetPasswordLinkInProgress:

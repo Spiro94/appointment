@@ -33,6 +33,13 @@ All outside dependencies must pass through the "front door" (`appBuilder()`) to 
 - **All widgets MUST be implemented as classes, never as helper methods**
 - This ensures proper widget lifecycle, key handling, and performance optimization
 
+### UI Framework (Forui)
+- Uses **Forui** as the primary UI framework: https://forui.dev/docs
+- Key widgets: `FButton`, `FCard`, `FTextFormField`, `FAlert`, `FDialog`, `FScaffold`, `FHeader`
+- FDialog usage: `showFDialog()` for displaying dialogs, `FDialog()` for content
+- FAlert usage: `FAlert(title: Text(...), style: FAlertStyle.destructive())`
+- Always refer to Forui documentation for proper widget usage and examples
+
 ## Essential Development Workflow
 
 ### Starting Development

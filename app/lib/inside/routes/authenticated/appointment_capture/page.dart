@@ -5,6 +5,7 @@ import 'package:forui/forui.dart';
 
 import '../../../../outside/repositories/ai/repository.dart';
 import '../../../../outside/repositories/appointments/repository.dart';
+import '../../../../shared/utils/snackbar_utils.dart';
 import '../../../blocs/appointment_capture/bloc.dart';
 import '../../../blocs/appointment_capture/state.dart';
 import '../../../blocs/feed/bloc.dart';
@@ -33,16 +34,9 @@ class AppointmentCapture_Page extends StatelessWidget
               context.read<Feed_Bloc>().add(
                 const Feed_Event_RefreshAppointments(),
               );
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  content: FAlert(
-                    title: const Text('Cita médica guardada exitosamente'),
-                    style: FAlertStyle.primary(),
-                  ),
-                  behavior: SnackBarBehavior.floating,
-                ),
+              SnackbarUtils.showFAlertSnackbar(
+                context,
+                text: 'Cita médica guardada exitosamente',
               );
             }
           },

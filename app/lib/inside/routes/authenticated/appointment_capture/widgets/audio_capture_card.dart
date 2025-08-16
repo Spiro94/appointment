@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 
+import '../../../../../shared/utils/snackbar_utils.dart';
 import '../../../../blocs/appointment_capture/bloc.dart';
 import '../../../../blocs/appointment_capture/events.dart';
 
@@ -242,13 +243,10 @@ class _AppointmentCapture_AudioCaptureCardState
   }
 
   void _showErrorSnackbar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: FAlert(title: Text(message), style: FAlertStyle.destructive()),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        behavior: SnackBarBehavior.floating,
-      ),
+    SnackbarUtils.showFAlertSnackbar(
+      context,
+      text: message,
+      alertStyle: FAlertStyle.destructive(),
     );
   }
 }

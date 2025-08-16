@@ -1,5 +1,6 @@
 import '../../../shared/models/ai_models.dart';
 import '../../../shared/models/appointment.dart';
+import '../../../shared/models/family_appointment.dart';
 import '../../client_providers/supabase/client_provider.dart';
 import '../../effect_providers/all.dart';
 import '../base.dart';
@@ -209,6 +210,51 @@ class Appointments_Repository extends Repository_Base {
       log.info('Appointment deleted successfully');
     } catch (e) {
       log.severe('Error deleting appointment: $e');
+      rethrow;
+    }
+  }
+
+  /// Get appointments for all family members with user profile information
+  /// This method returns appointments with additional user information for displaying
+  /// which family member the appointment belongs to
+  Future<List<Model_FamilyAppointment>>
+  getFamilyAppointmentsWithUserInfo() async {
+    try {
+      log.info('Fetching family appointments with user info');
+
+      final response = await supabaseClientProvider.client
+          .from('appointments')
+          .select('''
+            *,
+            user_profiles!inner (
+              id,
+              display_name,
+              email
+            )
+          ''')
+          .filter('deleted_at', 'is', null)
+          .order('date', ascending: true)
+          .order('time', ascending: true);
+
+      log.info('Retrieved ${response.length} family appointments');
+
+      return response.map<Model_FamilyAppointment>((item) {
+        // Extract appointment data (all fields except user_profiles)
+        final appointmentData = Map<String, dynamic>.from(item);
+        appointmentData.remove('user_profiles');
+
+        // Extract user profile data
+        final userProfileData = item['user_profiles'] as Map<String, dynamic>;
+
+        return Model_FamilyAppointment(
+          appointment: Model_Appointment.fromJson(appointmentData),
+          userProfile: Model_FamilyAppointmentUserProfile.fromJson(
+            userProfileData,
+          ),
+        );
+      }).toList();
+    } catch (e) {
+      log.severe('Error fetching family appointments: $e');
       rethrow;
     }
   }

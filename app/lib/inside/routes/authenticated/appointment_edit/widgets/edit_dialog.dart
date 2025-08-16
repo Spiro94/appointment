@@ -4,6 +4,7 @@ import 'package:forui/forui.dart';
 
 import '../../../../../shared/models/appointment.dart';
 import '../../../../../shared/models/enums/appointment_type.dart';
+import '../../../../../shared/utils/snackbar_utils.dart';
 import '../../../../blocs/appointment_edit/bloc.dart';
 import '../../../../blocs/appointment_edit/events.dart';
 import '../../../../blocs/appointment_edit/state.dart';
@@ -220,16 +221,10 @@ class _AppointmentEdit_SheetState extends State<AppointmentEdit_Sheet>
             context,
           ).pop(true); // Return true to indicate successful save
         } else if (state.hasError && state.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: FAlert(
-                title: Text(state.errorMessage!),
-                style: FAlertStyle.destructive(),
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              behavior: SnackBarBehavior.floating,
-            ),
+          SnackbarUtils.showFAlertSnackbar(
+            context,
+            text: state.errorMessage!,
+            alertStyle: FAlertStyle.destructive(),
           );
         }
       },

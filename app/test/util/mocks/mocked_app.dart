@@ -59,6 +59,7 @@ class MocksContainer {
     authRepository: MockAuthRepository(),
     aiRepository: MockAIRepository(),
     appointmentsRepository: MockAppointmentsRepository(),
+    familiesRepository: MockFamiliesRepository(),
   );
 
   final effectProviders = EffectProviders_All(
